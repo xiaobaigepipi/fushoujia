@@ -41,7 +41,7 @@
         select count(*) from user
         <where>
             <if test=" searchKey != null">
-                name like concat('%', #{searchKey}, '%') or email like concat('%', #{searchKey}, '%')
+                name like concat('%', #{searchKey}, '%') or email like concat('%', #{searchKey}, '%');
             </if>
         </where>
 
