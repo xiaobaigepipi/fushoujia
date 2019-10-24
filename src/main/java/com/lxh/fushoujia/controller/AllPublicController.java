@@ -19,6 +19,7 @@ import java.util.List;
  * @description: 全部公共接口访问，没有权限限制的
  * @author: Mr.Wang
  * @create: 2019-10-18 22:40
+ * git更新
  **/
 @Controller
 @RequestMapping("/all")
