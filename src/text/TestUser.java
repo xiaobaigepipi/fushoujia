@@ -70,7 +70,7 @@ public class TestUser {
        User user = new User();
        user.setFailNumber(3);
        user.setEmail("hdajdjj@qq.com");
-       user.setId(5);
+       user.setId(5);//djasj
        user.setName("eeyquwu");
        userService.updateUser(user);
 
