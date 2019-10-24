@@ -69,7 +69,7 @@ public class TestUser {
         //PageHelper.offsetPage(0, 5);
        User user = new User();
        user.setFailNumber(3);
-       user.setEmail("hdajdjj@qq.com");
+       user.setEmail("hdajdjj@qq.com");//dasjdjkas
        user.setId(5);//djasj
        user.setName("eeyquwu");
        userService.updateUser(user);
