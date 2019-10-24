@@ -18,6 +18,15 @@ public class ZSupplier {
     private String phone;
     private Date createDate;
     private Date updateDate;
+    private boolean isDelete;//是否删除
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
 
     public int getId() {
         return id;

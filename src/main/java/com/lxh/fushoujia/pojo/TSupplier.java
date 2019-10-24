@@ -20,6 +20,24 @@ public class TSupplier {
     private String remark2;
     private Date createDate;
     private Date updateDate;
+    private String code;
+    private boolean isDelete;//是否删除
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public int getId() {
         return id;

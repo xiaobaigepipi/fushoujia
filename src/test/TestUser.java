@@ -1,5 +1,6 @@
 import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.BasicService;
+import com.lxh.fushoujia.service.CustomerService;
 import com.lxh.fushoujia.service.UserService;
 import com.lxh.fushoujia.pojo.Page;
 import org.junit.Test;
@@ -27,6 +28,9 @@ public class TestUser {
 
     @Autowired
     BasicService basic;
+
+    @Autowired
+    CustomerService customerService;
 
    /* @Test
     public void test() {
@@ -67,13 +71,31 @@ public class TestUser {
        //int d = Integer.parseInt("56.34");
         //System.out.println(d);*/
         //PageHelper.offsetPage(0, 5);
-       User user = new User();
-       user.setFailNumber(3);
-       user.setEmail("hdajdjj@qq.com");//dasjdjkas
-       user.setId(5);//djasj
-       user.setName("eeyquwu");
-       userService.updateUser(user);
-
+        Customer c = new Customer();
+        c.setName("name1");
+        c.setAddress("Address1");
+        c.setBank("bank1");
+        c.setBillNumber("billNumber1");
+        c.setCode("code1");
+        c.setContact("contact1");
+        c.setDelete(true);
+        c.setEmail("email1");
+        c.setPhone("phone1");
+        c.setSale("sale1");
+        c.setReceiveAddress("receive1");
+        c.setRemark("remark1");
+        c.setTaxNumber("taxnumber1");
+        c.setWechat("wechat1");
+        //customerService.addCustomer(c);
+        System.out.println(customerService.getCustomer(1).getName());
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "nam");
+        map.put("start", 0);
+        map.put("count", 10);
+        List<Customer> list = customerService.listCustomer(map);
+        System.out.println(list.size());
+        c.setId(1);
+        customerService.updateCustomer(c);
     }
 
 
