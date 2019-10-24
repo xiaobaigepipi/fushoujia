@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.BasicMapper">
+
+    <resultMap id="userBean" type="com.lxh.fushoujia.pojo.User">
+        <id column="id"  property="id" />
+        <result column="name"  property="name" />
+        <result column="email"  property="email" />
+        <result column="userName"  property="userName" />
+        <result column="password"  property="password" />
+        <result column="qq"  property="qq" />
+        <result column="phone"  property="phone" />
+        <result column="departmentId"  property="departmentId" />
+        <result column="positionId"  property="positionId" />
+        <result column="failNumber"  property="failNumber" />
+        <result column="isHeadImage"  property="isHeadImage" />
+    </resultMap>
+
+    <select id="listDepartment" resultType="Department">
+        select * from department order by id desc;
+    </select>
+
+    <select id="getDepartment" resultType="Department" parameterType="int">
+        select * from department where id = #{id}
+    </select>
+
+    <select id="listDepartmentByTrue" resultType="Department">
+        select * from department where isDelete = true order by name;
+    </select>
+
+    <insert id="addDepartment" parameterType="Department" useGeneratedKeys="true" keyColumn="id">
+        insert into department (id, name, code, director) values (null, #{name}, #{code}), #{director});
+    </insert>
+
+    <update id="updateDepartment" parameterType="Department">
+        update department set name = #{name}, isDelete = #{isDelete}, director = #{director} where id = #{id};
+    </update>
+
+    <update id="updateDepartmentDelete" parameterType="Department">
+        update department set isDelete = #{isDelete} where id = #{id};
+    </update>
+
+
+    <select id="listPosition" resultType="Position">
+        select * from position_ order by id desc;
+    </select>
+    <select id="getPosition" resultType="Position" parameterType="int">
+        select * from position_ where id = #{id};
+    </select>
+
+
+    <select id="listPositionByTrue" resultType="Position">
+        select * from position_ where isDelete = true order by name;
+    </select>
+
+    <insert id="addPosition" parameterType="Position" useGeneratedKeys="true" keyColumn="id">
+        insert into position_ (id, name) values (null, #{name});
+    </insert>
+
+    <update id="updatePosition" parameterType="Position">
+        update position_ set name = #{name}, isDelete = #{isDelete} where id = #{id};
+    </update>
+
+
+    <select id="listIncomeOutCategory" resultType="IncomeOutCategory">
+        select * from income_out_category order by id desc;
+    </select>
+
+    <delete id="deleteIncomeOutCategory" parameterType="int">
+        delete from income_out_category where id = #{id};
+    </delete>
+
+    <insert id="addIncomeOutCategory" parameterType="IncomeOutCategory" useGeneratedKeys="true" keyColumn="id">
+        insert into income_out_category (id, name) values (null, #{name});
+    </insert>
+
+    <update id="updateIncomeOutCategory" parameterType="IncomeOutCategory">
+        update income_out_category set name = #{name} where id = #{id};
+    </update>
+
+
+    <select id="listSupplierType" resultType="SupplierType">
+        select * from supplier_type order by id desc;
+    </select>
+
+    <delete id="deleteSupplierType" parameterType="int">
+        delete from supplier_type where id = #{id};
+    </delete>
+
+    <insert id="addSupplierType" parameterType="SupplierType" useGeneratedKeys="true" keyColumn="id">
+        insert into supplier_type (id, name) values (null, #{name});
+    </insert>
+
+    <update id="updateSupplierType" parameterType="SupplierType">
+        update supplier_type set name = #{name} where id = #{id};
+    </update>
+
+
+
+    <select id="listProjectType" resultType="ProjectType">
+        select * from project_type order by id desc;
+    </select>
+
+    <delete id="deleteProjectType" parameterType="int">
+        delete from project_type where id = #{id};
+    </delete>
+
+    <insert id="addProjectType" parameterType="ProjectType" useGeneratedKeys="true" keyColumn="id">
+        insert into project_type (id, name) values (null, #{name});
+    </insert>
+
+    <update id="updateProjectType" parameterType="ProjectType">
+        update project_type set name = #{name} where id = #{id};
+    </update>
+
+
+
+    <select id="listProjectProperty" resultType="ProjectProperty">
+        select * from project_property order by id desc;
+    </select>
+
+    <delete id="deleteProjectProperty" parameterType="int">
+        delete from project_property where id = #{id};
+    </delete>
+
+    <insert id="addProjectProperty" parameterType="ProjectProperty" useGeneratedKeys="true" keyColumn="id">
+        insert into project_property (id, name) values (null, #{name});
+    </insert>
+
+    <update id="updateProjectProperty" parameterType="ProjectProperty">
+        update project_property set name = #{name} where id = #{id};
+    </update>
+
+
+    <select id="listProvince" resultType="Province">
+        select * from province order by id desc;
+    </select>
+    <select id="getProvince" resultType="Province" parameterType="int">
+        select * from province where id = #{id};
+    </select>
+
+    <delete id="deleteProvince" parameterType="int">
+        delete from province where id = #{id};
+    </delete>
+
+    <insert id="addProvince" parameterType="Province" useGeneratedKeys="true" keyColumn="id">
+        insert into province (id, name) values (null, #{name});
+    </insert>
+
+    <update id="updateProvince" parameterType="Province">
+        update province set name = #{name} where id = #{id};
+    </update>
+
+
+    <select id="listCity" resultType="City" parameterType="int">
+        select * from city where provinceId = #{id} order by id desc;
+    </select>
+    <select id="getCity" resultType="City" parameterType="int">
+        select * from city where id = #{id};
+    </select>
+
+    <delete id="deleteCity" parameterType="int">
+        delete from city where id = #{id};
+    </delete>
+
+    <insert id="addCity" parameterType="City" useGeneratedKeys="true" keyColumn="id">
+        insert into city (id, name, provinceId) values (null, #{name}, #{provinceId});
+    </insert>
+
+    <update id="updateCity" parameterType="City">
+        update city set name = #{name} where id = #{id};
+    </update>
+
+
+
+    <select id="listArea" resultType="Area" parameterType="int">
+        select * from area where cityId = #{id} order by id desc;
+    </select>
+
+    <delete id="deleteArea" parameterType="int">
+        delete from area where id = #{id};
+    </delete>
+
+    <insert id="addArea" parameterType="Area" useGeneratedKeys="true" keyColumn="id">
+        insert into area (id, name, cityId) values (null, #{name}, #{cityId});
+    </insert>
+
+    <update id="updateArea" parameterType="Area">
+        update area set name = #{name} where id = #{id};
+    </update>
+
+
+
+
+</mapper>

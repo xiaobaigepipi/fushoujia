@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.UserMapper">
+
+    <resultMap id="userBean" type="com.lxh.fushoujia.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="failNumber" jdbcType="VARCHAR" property="failNumber" />
+
+        <association property="department" javaType="Department">
+            <id column="did" jdbcType="INTEGER" property="id" />
+            <result column="dname" jdbcType="VARCHAR" property="name" />
+        </association>
+        <association property="position" javaType="Position">
+            <id column="pid" jdbcType="INTEGER" property="id" />
+            <result column="pname" jdbcType="VARCHAR" property="name" />
+        </association>
+
+        <collection property="userRoles" ofType="UserRole">
+            <id column="urid" jdbcType="INTEGER" property="id" />
+            <association property="role" javaType="Role">
+                <id column="rid" jdbcType="INTEGER" property="id" />
+                <id column="rname" jdbcType="VARCHAR" property="name" />
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="list" resultMap="userBean" parameterType="Page">
+        select u.id as id, u.failNumber as failNumber, ur.id as urid, r.id as rid, r.name as rname, u.name as name, u.email as email, d.id as did, d.name as dname, p.id as pid, p.name as pname from (select * from user
+        <where>
+            <if test="searchKey != null">
+                name like concat('%', #{searchKey}, '%') or email like concat('%', #{searchKey}, '%' )
+            </if>
+        </where>
+         limit #{start}, #{count}) u left join user_role ur on u.id = ur.userId left join role  r on ur.roleId = r.id left join department d on u.departmentId = d.id left join position_ p on u.positionId = p.id;
+    </select>
+
+    <select id="getTotal" resultType="int" parameterType="Page">
+        select count(*) from user
+        <where>
+            <if test=" searchKey != null">
+                name like concat('%', #{searchKey}, '%') or email like concat('%', #{searchKey}, '%')
+            </if>
+        </where>
+
+    </select>
+
+    <select id="listByLogin" resultType="com.lxh.fushoujia.pojo.User" >
+        select * from user where email = #{email} and password = #{password};
+    </select>
+
+    <select id="listByEmail" resultType="com.lxh.fushoujia.pojo.User" >
+        select * from user where email = #{email}
+    </select>
+
+    <select id="getUser" resultType="com.lxh.fushoujia.pojo.User" parameterType="int" >
+        select * from user where id = #{id}
+    </select>
+
+    <update id="updateFailNumber" parameterType="com.lxh.fushoujia.pojo.User">
+        update user set failNumber = #{failNumber} where id = #{id}
+    </update>
+
+    <select id="listRole" resultType="Role">
+        select * from role order by id desc;
+    </select>
+
+    <select id="checkUserName" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) from user
+        <where>
+            <if test="email != null">
+               and email = #{email}
+            </if>
+            <if test="userName != null">
+                and userName = #{userName}
+            </if>
+            <if test="userName != null">
+              and password = #{password}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUser" parameterType="User" keyProperty="id" useGeneratedKeys="true">
+        insert into user (email, name, userName, qq, phone, password, departmentId, positionId, isHeadImage) values (#{email}, #{name}, #{userName}, #{qq}, #{phone}, #{password}, #{departmentId}, #{positionId}, #{isHeadImage})
+    </insert>
+
+    <insert id="addUserRole" useGeneratedKeys="true" keyColumn="id" parameterType="int">
+        insert into user_role (id, userId, roleId, createDate) values (null, #{userId}, #{roleId}, now());
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update user
+        <set>
+            <if test="userName != null">
+                userName = #{userName},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="qq != null">
+                qq = #{qq},
+            </if>
+            <if test="isHeadImage == true">
+                isHeadImage = #{isHeadImage},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="failNumber != 0">
+                failNumber = #{failNumber},
+            </if>
+            <if test="departmentId != 0">
+                departmentId = #{departmentId},
+            </if>
+            <if test="positionId != 0">
+                positionId = #{positionId}
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updatePassword" parameterType="User">
+        update user set password = #{password} where id = #{id};
+    </update>
+
+    <delete id="deleteUserRoles" parameterType="int">
+        delete from user_role where userId = #{id}
+    </delete>
+
+</mapper>
