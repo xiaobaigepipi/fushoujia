@@ -28,6 +28,10 @@ public class Customer {
     private String code; //客户编号
     private boolean isDelete;//是否删除
 
+    public Customer() {
+        this.setDelete(false);
+    }
+
     public boolean isDelete() {
         return isDelete;
     }

@@ -22,6 +22,19 @@ public class TSupplier {
     private Date updateDate;
     private String code;
     private boolean isDelete;//是否删除
+    private String contact;
+
+    public TSupplier() {
+        this.isDelete = false;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
     public boolean isDelete() {
         return isDelete;

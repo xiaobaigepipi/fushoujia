@@ -20,6 +20,10 @@ public class ZSupplier {
     private Date updateDate;
     private boolean isDelete;//是否删除
 
+    public ZSupplier() {
+        this.setDelete(false);
+    }
+
     public boolean isDelete() {
         return isDelete;
     }

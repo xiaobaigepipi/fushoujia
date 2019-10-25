@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.SupplierMapper">
+
+    <!--查询技术供应商-->
+    <select id="listTSupplier" parameterType="java.util.Map" resultType="TSupplier">
+        select * from tsupplier_info
+            <where>
+                isDelete = false
+                <if test="name != null">
+                    and name like concat('%', #{name}, '%')
+                </if>
+                <if test="code != null">
+                    and code like concat('%', #{code}, '%')
+                </if>
+                <if test="address != null">
+                    and address like concat('%', #{address}, '%')
+                </if>
+                <if test="contact != null">
+                    and contact like concat('%', #{contact}, '%')
+                </if>
+                <if test="phone != null">
+                    and phone like concat('%', #{phone}, '%')
+                </if>
+            </where>
+        limit #{start}, #{count}
+    </select>
+
+    <!--增加技术供应商-->
+    <insert id="addTSupplier" parameterType="TSupplier" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into tsupplier_info (name, code, address, contact, phone, email, wechat, remark1, remark2, createDate) values (#{name}, #{code}, #{address}, #{contact}, #{phone}, #{email}, #{wechat}, #{remark1}, #{remark2}, now());
+    </insert>
+
+    <!--获取单个供应商信息-->
+    <select id="getTSupplier" parameterType="int" resultType="TSupplier">
+        select * from tsupplier_info where id = #{id} and isDelete = false
+    </select>
+
+    <!--获取数量-->
+    <select id="getTotal" resultType="int">
+        select count(*) from tsupplier_info where isDelete = false;
+    </select>
+    <!--修改供应商信息-->
+    <update id="updateTSupplier" parameterType="TSupplier">
+        update tsupplier_info
+            <set>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="code != null">
+                    code = #{code},
+                </if>
+                <if test="address != null">
+                    address = #{address},
+                </if>
+                <if test="contact != null">
+                    contact = #{contact},
+                </if>
+                <if test="email != null">
+                    email = #{email},
+                </if>
+                <if test="wechat != null">
+                    wechat = #{wechat},
+                </if>
+                <if test="phone != null">
+                    phone = #{phone},
+                </if>
+                <if test="remark1 != null">
+                    remark1 = #{remark1},
+                </if>
+                <if test="remark2 != null">
+                    remark2 = #{remark2},
+                </if>
+                <if test="isDelete != false">
+                     isDlete = true,
+                </if>
+                updateDate = now()
+            </set>
+        where id = #{id}
+    </update>
+
+    <!--查询资质供应商-->
+    <select id="listZSupplier" parameterType="Page" resultType="ZSupplier">
+        select * from zsupplier_info where name like concat('%', #{searchKey}, '%') or  contact like concat('%', #{searchKey}, '%') limit #{start}, #{count};
+    </select>
+
+    <!--新增资质供应商-->
+    <insert id="addZSupplier" parameterType="ZSupplier" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        insert into zsupplier_info (name, type, charges, contact, phone, createDate) values (#{name}, #{type}, #{charges}, #{contact}, #{phone}, now());
+    </insert>
+
+    <!--获取资质供应商-->
+    <select id="getZSupplier" parameterType="int" resultType="ZSupplier">
+        select * from zsupplier_info where id = #{id} and isDelete = false;
+    </select>
+
+    <!--修改资质供应商-->
+    <update id="updateZSupplier" parameterType="ZSupplier">
+        update zsupplier_info
+            <set>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="type != null">
+                    type = #{type},
+                </if>
+                <if test="charges != null">
+                    charges = #{charges},
+                </if>
+                <if test="contact != null">
+                    contact = #{contact},
+                </if>
+                <if test="phone != null">
+                    phone = #{phone},
+                </if>
+                <if test="isDelete != false">
+                    isDelete = true,
+                </if>
+                updateDate = now()
+            </set>
+        where id = #{id}
+    </update>
+
+    <!--获取数量-->
+    <select id="getZTotal" resultType="int">
+        select count(*) from zsupplier_info where isDelete = false;
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

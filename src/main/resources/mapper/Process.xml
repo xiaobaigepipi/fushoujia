@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.ProcessMapper">
+    <!--查询一级工序目录-->
+    <select id="listFirstProcess" resultType="FirstProcess">
+        select * from first_process
+    </select>
+
+    <insert id="addFirstProcess" parameterType="FirstProcess">
+        insert into first_process (name, createDate) values (#{name}, now());
+    </insert>
+
+    <update id="updateFirstProcess" parameterType="FirstProcess">
+        update first_process set name = #{name} where id = #{id};
+    </update>
+
+    <delete id="deleteFirstProcess" parameterType="int">
+        delete from first_process where id = #{id};
+    </delete>
+
+    <select id="getFirstProcess" parameterType="int">
+        select * from first_process where id = #{id}
+    </select>
+
+    <select id="listSecondProcess" resultType="SecondProcess">
+        select * from second_process
+    </select>
+
+    <insert id="addSecondProcess" parameterType="SecondProcess">
+        insert into second_process (name, createDate, firstId) values (#{name}, now(), #{firstId});
+    </insert>
+
+    <update id="updateSecondProcess" parameterType="SecondProcess">
+        update scond_process set name = #{name} where id = #{id};
+    </update>
+
+    <delete id="deleteSecondProcess" parameterType="int">
+        delete from second_process where id = #{id};
+    </delete>
+
+    <select id="getSecondProcess" parameterType="int">
+        select * from second_process where id = #{id}
+    </select>
+</mapper>
