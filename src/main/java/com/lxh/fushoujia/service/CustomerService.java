@@ -11,4 +11,5 @@ public interface CustomerService {
     int addCustomer(Customer customer);
     Customer getCustomer(@Param("id")int id);
     int updateCustomer(Customer customer);
+    int getTotal(Map<String, Object> map);
 }

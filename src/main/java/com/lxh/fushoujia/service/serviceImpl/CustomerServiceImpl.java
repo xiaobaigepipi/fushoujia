@@ -40,4 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
     public int updateCustomer(Customer customer) {
         return customerMapper.updateCustomer(customer);
     }
+
+    @Override
+    public int getTotal(Map<String, Object> map) {
+        return customerMapper.getTotal(map);
+    }
 }
