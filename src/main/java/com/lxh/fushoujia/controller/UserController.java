@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class UserController {
         //System.out.println(id);
         User user = userService.getUser(id);
 
-        System.out.println(user.getHeadImage());
+        //System.out.println(user.getHeadImage());
         return user;
     }
 
@@ -237,8 +238,8 @@ public class UserController {
     @ResponseBody
     public Result checkPassword(String password, @PathVariable Integer id) {
         User user = userService.getUser(id);
-        System.out.println(user.getPassword());
-        System.out.println(password);
+        //System.out.println(user.getPassword());
+        //System.out.println(password);
         if (user.getPassword().equals(password)) {
             return new Result("密码正确", "200");
         }
@@ -250,7 +251,11 @@ public class UserController {
     * */
     @RequestMapping(value = "/action/users", method = RequestMethod.GET)
     @ResponseBody
-    public Result listUser(Page page){
+    public Result listUser(Page page) throws UnsupportedEncodingException {
+        System.out.println(page.getSearchKey());
+        String searchKey = Util.decode(page.getSearchKey());
+        System.out.println(searchKey);
+        page.setSearchKey(searchKey);
         List<User> list = userService.list(page);
         page.setTotal(userService.getTotal(page));
         return new Result("查询成功！", "200", page, list);

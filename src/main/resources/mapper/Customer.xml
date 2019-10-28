@@ -3,6 +3,11 @@
 
 <mapper namespace="com.lxh.fushoujia.mapper.CustomerMapper">
 
+    <!--获取最后一行的客户编号-->
+    <select id="getCode" resultType="String">
+        select code from customer_info where isDelete = false order by id desc  limit 0, 1;
+    </select>
+
     <!--查询全部并分页-->
     <select id="listCustomer" parameterType="java.util.Map" resultType="Customer">
         select * from customer_info
@@ -38,7 +43,7 @@
 
     <!--获取单个客户信息-->
     <select id="getCustomer" resultType="Customer" parameterType="int">
-        select * from customer_info where id = #{id} where isDelete = false;
+        select * from customer_info where id = #{id} and isDelete = false;
     </select>
     <select id="getTotal" resultType="int" parameterType="java.util.Map">
         select count(*) from customer_info

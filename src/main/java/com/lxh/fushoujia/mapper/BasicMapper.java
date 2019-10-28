@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface BasicMapper {
+    List<Province> listAddress();
     //部门信息的增删改查
     List<Department> listDepartment();
     int addDepartment(Department d);

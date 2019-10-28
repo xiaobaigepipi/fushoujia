@@ -233,5 +233,8 @@ public class BasicServiceImpl implements BasicService {
         return basic.getPosition(id);
     }
 
-
+    @Override
+    public List<Province> listAddress() {
+        return basic.listAddress();
+    }
 }

@@ -1,8 +1,13 @@
 package com.lxh.fushoujia.util;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -46,6 +51,19 @@ public class Util {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static String decode(String code) {
+        if (code == null || code.length() <= 0 || code == "null") {
+            System.out.println("isNull");
+            return null;
+        }
+        try {
+            code = URLDecoder.decode(code, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return code;
     }
 
 }

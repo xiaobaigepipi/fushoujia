@@ -3,6 +3,31 @@
 
 <mapper namespace="com.lxh.fushoujia.mapper.BasicMapper">
 
+    <resultMap id="address" type="com.lxh.fushoujia.pojo.Province">
+        <id column="pid" jdbcType="INTEGER" property="id" />
+        <result column="pname" jdbcType="VARCHAR" property="name"></result>
+
+        <collection property="citys" ofType="City">
+            <id column="cid" jdbcType="INTEGER" property="id"></id>
+            <result column="cname" jdbcType="VARCHAR" property="name"></result>
+
+            <collection property="areas" ofType="Area">
+                <id column="aid" jdbcType="INTEGER" property="id"></id>
+                <result column="aname" jdbcType="VARCHAR" property="name"></result>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="listAddress" resultMap="address">
+        select p.id as pid,
+              p.name as pname,
+              c.id as cid,
+              c.name as cname,
+              a.id as aid,
+              a.name as aname
+         from province p left join city c on p.id = c.provinceId left join area a on c.id = a.cityId;
+    </select>
+
     <resultMap id="userBean" type="com.lxh.fushoujia.pojo.User">
         <id column="id"  property="id" />
         <result column="name"  property="name" />
