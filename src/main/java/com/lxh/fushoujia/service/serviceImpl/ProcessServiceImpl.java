@@ -46,8 +46,8 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     @Override
-    public List<SecondProcess> listSecondProcess() {
-        return processMapper.listSecondProcess();
+    public List<SecondProcess> listSecondProcess(Integer firstId) {
+        return processMapper.listSecondProcess(firstId);
     }
 
     @Override

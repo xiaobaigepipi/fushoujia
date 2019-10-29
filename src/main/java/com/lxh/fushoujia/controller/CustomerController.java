@@ -29,7 +29,7 @@ public class CustomerController {
     @RequestMapping(value = "/clients", method = RequestMethod.GET)
     @ResponseBody
     public Result listCustomer(Customer customer, @RequestParam("start") Integer start, @RequestParam("count") Integer count) {
-        System.out.println(count);
+        //System.out.println(count);
         Map<String, Object> map = new HashMap<>();
 
         map.put("start", start);
@@ -71,36 +71,9 @@ public class CustomerController {
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     @ResponseBody
     public Result addCustomer(@RequestBody Customer customer) {
-        Date date = new Date();
-        SimpleDateFormat sf = new SimpleDateFormat("yyyyMM");
-        String code = sf.format(date);
+
         String data = customerService.getCode();
-        int newYear = Calendar.getInstance().get(Calendar.YEAR);
-        int newMonth = Calendar.getInstance().get(Calendar.MONTH ) +1;
-        int year = newYear;
-        int month = newMonth;
-        int number = 0;
-        if (data == null || data.length() == 0) {
-            code = "KH" + code + "001";
-        } else {
-            year = Integer.parseInt(data.substring(2, 6));
-            month = Integer.parseInt(data.substring(6, 8));
-            number = Integer.parseInt(data.substring(8));
-            if (newYear > year || newMonth > month) {
-                code = "KH" + code + "001";
-            } else {
-                number += 1;
-                String numbers = null;
-                if (number < 10) {
-                    numbers = "00" + number;
-                } else if (number < 100 && number >=10){
-                    numbers = "0"+ number;
-                } else {
-                    numbers = String.valueOf(number);
-                }
-                code = "KH" + code + numbers;
-            }
-        }
+        String code = Util.getCode(data, "KH");
         customer.setCode(code);
 
         customerService.addCustomer(customer);

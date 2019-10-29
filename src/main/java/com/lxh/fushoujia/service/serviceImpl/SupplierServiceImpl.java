@@ -63,12 +63,17 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public int getTotal() {
-        return supplierMapper.getTotal();
+    public int getTotal(Map<String, Object> map) {
+        return supplierMapper.getTotal(map);
     }
 
     @Override
-    public int getZTotal() {
-        return supplierMapper.getZTotal();
+    public int getZTotal(String key) {
+        return supplierMapper.getZTotal(key);
+    }
+
+    @Override
+    public String getCode() {
+        return supplierMapper.getCode();
     }
 }

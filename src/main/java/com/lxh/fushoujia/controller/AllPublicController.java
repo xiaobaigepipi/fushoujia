@@ -3,6 +3,7 @@ package com.lxh.fushoujia.controller;
 import com.lxh.fushoujia.pojo.Department;
 import com.lxh.fushoujia.pojo.Position;
 import com.lxh.fushoujia.pojo.Province;
+import com.lxh.fushoujia.pojo.SupplierType;
 import com.lxh.fushoujia.service.BasicService;
 import com.lxh.fushoujia.service.UserService;
 import com.lxh.fushoujia.util.Result;
@@ -63,6 +64,13 @@ public class AllPublicController {
     @ResponseBody
     public Result listAddress() {
         List<Province> list = basicService.listAddress();
+        return new Result("查询成功", "200", list);
+    }
+
+    @RequestMapping(value="/suppliertype", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listSupplierType() {
+        List<SupplierType> list = basicService.listSupplierType();
         return new Result("查询成功", "200", list);
     }
 }

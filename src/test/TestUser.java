@@ -1,8 +1,5 @@
 import com.lxh.fushoujia.pojo.*;
-import com.lxh.fushoujia.service.BasicService;
-import com.lxh.fushoujia.service.CustomerService;
-import com.lxh.fushoujia.service.SupplierService;
-import com.lxh.fushoujia.service.UserService;
+import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.pojo.Page;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,10 +32,13 @@ public class TestUser {
     @Autowired
     SupplierService supplierService;
 
+    @Autowired
+    ProcessService processService;
+
     @Test
     public void testData() {
 
-
+    FirstProcess f = processService.getFirstProcess(7);
 
     }
 

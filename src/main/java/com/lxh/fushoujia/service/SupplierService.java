@@ -13,11 +13,12 @@ public interface SupplierService {
     int addTSupplier(TSupplier ts);
     TSupplier getTSupplier(@Param("id") int id);
     int updateTSupplier(TSupplier ts);
-    int getTotal();
+    int getTotal(Map<String, Object> map);
+    String getCode();
 
     List<ZSupplier> listZSupplier(Page page);
     int addZSupplier(ZSupplier ts);
     TSupplier getZSupplier(@Param("id") int id);
     int updateZSupplier(ZSupplier ts);
-    int getZTotal();
+    int getZTotal(String key);
 }

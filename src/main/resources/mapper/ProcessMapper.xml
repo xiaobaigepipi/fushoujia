@@ -19,12 +19,12 @@
         delete from first_process where id = #{id};
     </delete>
 
-    <select id="getFirstProcess" parameterType="int">
+    <select id="getFirstProcess" parameterType="int" resultType="FirstProcess">
         select * from first_process where id = #{id}
     </select>
 
     <select id="listSecondProcess" resultType="SecondProcess">
-        select * from second_process
+        select * from second_process where firstId = #{firstId}
     </select>
 
     <insert id="addSecondProcess" parameterType="SecondProcess">
@@ -32,7 +32,7 @@
     </insert>
 
     <update id="updateSecondProcess" parameterType="SecondProcess">
-        update scond_process set name = #{name} where id = #{id};
+        update second_process set name = #{name} where id = #{id};
     </update>
 
     <delete id="deleteSecondProcess" parameterType="int">

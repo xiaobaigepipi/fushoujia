@@ -13,7 +13,7 @@ public interface ProcessMapper {
     int deleteFirstProcess(@Param("id")int id);
     FirstProcess getFirstProcess(@Param("id")int id);
 
-    List<SecondProcess> listSecondProcess();
+    List<SecondProcess> listSecondProcess(@Param("firstId") Integer firstId);
     int addSecondProcess(SecondProcess second);
     int updateSecondProcess(SecondProcess second);
     int deleteSecondProcess(@Param("id")int id);
