@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.ProjectMapper">
+    <insert id="addProject" parameterType="Project" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into project
+            (name, code, type, property, projectDate, origin, client, province, city, workPlace, buildArea, landArea, subject, principal, tenderType, supplier, description, startDate, endDate, cycle, status, contract, createDate, updateDate, userId)
+            values
+            (#{name}, #{code}, #{type}, #{property}, #{projectDate}, #{origin}, #{client}, #{province}, #{city}, #{workPlace}, #{buildArea}, #{landArea}, #{subject}, #{principal}, #{tenderType}, #{supplier}, #{description}, #{startDate}, #{endDate}, #{cycle}, #{status}, #{contract}, now(), now(), #{userId});
+    </insert>
+
+    <select id="listProject" parameterType="java.util.Map" resultType="Project">
+        select * from project
+        <where>
+            isDelete = false
+            <if test=" name != null">
+                and ( name like concat('%', #{name}, '%') or code like concat('%', #{name}, '%') )
+            </if>
+            <if test=" type != null">
+                and type = #{type}
+            </if>
+            <if test="property != null">
+                and property = #{property}
+            </if>
+            <if test="principal != null">
+                and principal = #{principal}
+            </if>
+            <if test="projectDate != null">
+                and date(projectDate) = #{projectDate}
+            </if>
+            <if test="year != null">
+                and year(projectDate) = #{year}
+            </if>
+            <if test="month != null">
+                and month(projectDate) = #{year}
+            </if>
+            <if test="userId != null">
+                and userId = #{userId}
+            </if>
+        </where>
+        limit #{start}, #{count};
+    </select>
+
+    <select id="getTotal" parameterType="java.util.Map" resultType="Integer">
+        select count(*) from project
+        <where>
+            isDelete = false
+            <if test=" name != null">
+                and ( name like concat('%', #{name}, '%') or code like concat('%', #{name}, '%') )
+            </if>
+            <if test=" type != null">
+                and type = #{type}
+            </if>
+            <if test="property != null">
+                and property = #{property}
+            </if>
+            <if test="principal != null">
+                and principal = #{principal}
+            </if>
+            <if test="projectDate != null">
+                and date(projectDate) = #{projectDate}
+            </if>
+            <if test="year != null">
+                and year(projectDate) = #{year}
+            </if>
+            <if test="month != null">
+                and month(projectDate) = #{year}
+            </if>
+            <if test="userId != null">
+                and userId = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="getProject" parameterType="int" resultType="Project">
+        select * from project where id = #{id} and isDelete = false;
+    </select>
+
+    <update id="updateProject" parameterType="Project">
+        update project
+            <set>
+                <if test="name != null">
+                    name = #{name},
+                </if>
+                <if test="type != null">
+                    type = #{type},
+                </if>
+                <if test="property != null">
+                    property = #{property},
+                </if>
+                <if test="projectDate != null">
+                    projectDate = #{projectDate},
+                </if>
+                <if test="origin != null">
+                    origin = #{origin},
+                </if>
+                <if test="client != null">
+                    client = #{client},
+                </if>
+                <if test="province != null">
+                    province = #{name},
+                </if>
+                <if test="city != null">
+                    city = #{name},
+                </if>
+                <if test="workPlace != null">
+                    workPlace = #{name},
+                </if>
+                <if test="buildArea != null">
+                    buildArea = #{buildArea},
+                </if>
+                <if test="landArea != null">
+                    landArea = #{landArea},
+                </if>
+                <if test="subject != null">
+                    subject = #{subject},
+                </if>
+                <if test="principal != null">
+                    principal = #{principal},
+                </if>
+                <if test="tenderType != null">
+                    tenderType = #{tenderType},
+                </if>
+                <if test="supplier != null">
+                    supplier = #{supplier},
+                </if>
+                <if test="description != null">
+                    description = #{description},
+                </if>
+                <if test="startDate != null">
+                    startDate = #{startDate},
+                </if>
+                <if test="endDate != null">
+                    endDate = #{endDate},
+                </if>
+                <if test="cycle != null">
+                    cycle = #{cycle},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="contract != null">
+                    contract = #{contract},
+                </if>
+                <if test="isDelete != false">
+                    isDelete = true,
+                </if>
+                <if test="userId != null">
+                    userId = #{userId},
+                </if>
+                updateDate =  now()
+            </set>
+        where id = #{id};
+    </update>
+</mapper>

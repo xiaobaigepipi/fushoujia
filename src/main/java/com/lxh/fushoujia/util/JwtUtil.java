@@ -28,7 +28,7 @@ public class JwtUtil {
     //Token秘钥
     private static final String TOKEN_SECRET = "ssccaa1236900";
 
-    /*
+    /**
     * userName: 用户名称
     * userId: 用户Id
     * 生成含有用户信息的token
