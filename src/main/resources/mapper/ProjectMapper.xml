@@ -28,11 +28,11 @@
             <if test="projectDate != null">
                 and date(projectDate) = #{projectDate}
             </if>
-            <if test="year != null">
+            <if test="year != 0">
                 and year(projectDate) = #{year}
             </if>
-            <if test="month != null">
-                and month(projectDate) = #{year}
+            <if test="month != 0">
+                and month(projectDate) = #{month}
             </if>
             <if test="userId != null">
                 and userId = #{userId}
@@ -60,11 +60,11 @@
             <if test="projectDate != null">
                 and date(projectDate) = #{projectDate}
             </if>
-            <if test="year != null">
+            <if test="year != 0">
                 and year(projectDate) = #{year}
             </if>
-            <if test="month != null">
-                and month(projectDate) = #{year}
+            <if test="month != 0">
+                and month(projectDate) = #{month}
             </if>
             <if test="userId != null">
                 and userId = #{userId}

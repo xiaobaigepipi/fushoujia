@@ -1,5 +1,7 @@
 package com.lxh.fushoujia.pojo;
 
+import java.util.List;
+
 /**
  * @program: fushoujia
  * @description:
@@ -12,6 +14,15 @@ public class Role {
     private String name;
     private String code;
     private String remark;
+    private List<RoleAction> roleActions;
+
+    public List<RoleAction> getRoleActions() {
+        return roleActions;
+    }
+
+    public void setRoleActions(List<RoleAction> roleActions) {
+        this.roleActions = roleActions;
+    }
 
     public int getId() {
         return id;

@@ -37,6 +37,46 @@
          limit #{start}, #{count}) u left join user_role ur on u.id = ur.userId left join role  r on ur.roleId = r.id left join department d on u.departmentId = d.id left join position_ p on u.positionId = p.id;
     </select>
 
+    <!--查询项目负责人-->
+    <resultMap id="projectUser" type="User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <collection property="userRoles" ofType="UserRole">
+            <id column="urid" jdbcType="INTEGER" property="id" />
+            <association property="role" javaType="Role">
+                <id column="rid" jdbcType="INTEGER" property="id" />
+                <result column="rname" jdbcType="VARCHAR" property="name" />
+                <collection property="roleActions" ofType="RoleAction">
+                    <id column="raid" jdbcType="INTEGER" property="id" />
+                    <association property="action" javaType="Action">
+                        <id column="aid" jdbcType="INTEGER" property="id" />
+                        <result column="aname" jdbcType="VARCHAR" property="name" />
+                        <result column="acode" jdbcType="VARCHAR" property="code" />
+                        <result column="aurl" jdbcType="VARCHAR" property="url" />
+                    </association>
+                </collection>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="listUserAction" resultMap="projectUser">
+        select
+              u.id as id,
+              u.name as name,
+              u.email as email,
+              ur.id as urid,
+              r.id as rid,
+              r.name as rname,
+              ra.id as raid,
+              a.id as aid,
+              a.name as aname,
+              a.code as acode,
+              a.url as aurl
+        from user u left join user_role ur on u.id = ur.userId left join role r on r.id = ur.roleId left join role_action ra on ra.roleId = r.id left join action a on a.id = ra.actionId;
+
+    </select>
+
     <select id="getTotal" resultType="int" parameterType="Page">
         select count(*) from user
         <where>

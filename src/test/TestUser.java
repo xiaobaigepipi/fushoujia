@@ -37,8 +37,23 @@ public class TestUser {
 
     @Test
     public void testData() {
-
-    FirstProcess f = processService.getFirstProcess(7);
+        List<User> list = userService.listUserAction();
+        List<User> lists = new ArrayList<>();
+        for (User u : list) {
+            List<UserRole> urs = u.getUserRoles();
+            sign:
+            for (UserRole ur : urs) {
+                List<RoleAction> ras = ur.getRole().getRoleActions();
+                for (RoleAction ra : ras) {
+                    Action a = ra.getAction();
+                    if (a.getCode().equals("project")) {
+                        lists.add(u);
+                        System.out.println(u.getName());
+                        break sign;
+                    }
+                }
+            }
+        }
 
     }
 

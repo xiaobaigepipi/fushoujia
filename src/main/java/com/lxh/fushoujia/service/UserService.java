@@ -29,4 +29,6 @@ public interface UserService {
     int updatePassword(User user);
     //删除用户角色表
     void deleteUserRole(int id);
+    //查找全部用户和权限
+    List<User> listUserAction();
 }

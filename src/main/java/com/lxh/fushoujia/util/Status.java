@@ -14,8 +14,11 @@ public class Status {
     private static final String toSendSecond = "toSendSecond"; //未派遣二级
     private static final String toApproval = "noApproval"; //待审批
     private static final String review = "review"; //已审核
-    private static final String approval = "approval"; //已审核
+    private static final String approval = "approval"; //已审批
     private static final String invalid = "invalid"; //已作废//
     private static final String noReview = "noReview"; //审核未通过
     private static final String noApproval = "noApproval"; //审批未通过
+    private static final String contract = "contract"; //已签合同
+    private static final String noContract = "noContract"; //未签合同
+    private static final String contractEnd = "contractEnd"; //合同终止
 }

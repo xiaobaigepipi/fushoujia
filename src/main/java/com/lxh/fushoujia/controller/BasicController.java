@@ -21,7 +21,7 @@ import java.util.List;
  * @create: 2019-10-15 16:42
  **/
 @Controller
-@RequestMapping("/basic")
+@RequestMapping("")
 public class BasicController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class BasicController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/departments", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/departments", method = RequestMethod.GET)
     @ResponseBody
     public Result listDepartment(HttpServletRequest request) {
         List<Department> list = basicService.listDepartment();
@@ -40,7 +40,7 @@ public class BasicController {
     /*
     * 新增部门信息
     * */
-    @RequestMapping(value = "/departments", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/departments", method = RequestMethod.POST)
     @ResponseBody
     public Result addDepartment(@RequestBody Department department) {
         Date d = new Date();
@@ -54,7 +54,7 @@ public class BasicController {
     /*
     * 修改部门信息
     * */
-    @RequestMapping(value = "/departments/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/departments/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateDepartment(@RequestBody Department department, @PathVariable Integer id) {
         basicService.updateDepartment(department);
@@ -66,7 +66,7 @@ public class BasicController {
     /*
     * 查询职务信息
     * */
-    @RequestMapping(value = "/positions", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/positions", method = RequestMethod.GET)
     @ResponseBody
     public Result listPosition() {
         List<Position> list = basicService.listPosition();
@@ -77,7 +77,7 @@ public class BasicController {
     /*
     * 增加职务信息
     * */
-    @RequestMapping(value = "/positions", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/positions", method = RequestMethod.POST)
     @ResponseBody
     public Result addPosition(@RequestBody Position position) {
         int id = basicService.addPosition(position);
@@ -88,7 +88,7 @@ public class BasicController {
     /*
     * 修改职务信息
     * */
-    @RequestMapping(value = "/positions/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/positions/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updatePosition(@RequestBody Position position, @PathVariable Integer id) {
         basicService.updatePosition(position);
@@ -99,7 +99,7 @@ public class BasicController {
     /*
     * 查询收支类别
     * */
-    @RequestMapping(value = "/incomeouts", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/incomeouts", method = RequestMethod.GET)
     @ResponseBody
     public Result listIncomeout() {
         List<IncomeOutCategory> list = basicService.listIncomeOutCategory();
@@ -111,7 +111,7 @@ public class BasicController {
     * 增加收支类别
     *
     * */
-    @RequestMapping(value = "/incomeouts", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/incomeouts", method = RequestMethod.POST)
     @ResponseBody
     public Result addIncomout(@RequestBody IncomeOutCategory in) {
         int id = basicService.addIncomeOutCategory(in);
@@ -121,7 +121,7 @@ public class BasicController {
     /*
     * 修改收支类别
     * */
-    @RequestMapping(value = "/incomeouts/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/incomeouts/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateIncomout(@RequestBody IncomeOutCategory in, @PathVariable Integer id) {
         basicService.updateIncomeOutCategory(in);
@@ -131,7 +131,7 @@ public class BasicController {
     /*
     * 删除收支类别
     * */
-    @RequestMapping(value = "/incomeouts/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/incomeouts/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteIncomeout(@PathVariable Integer id) {
         basicService.deleteIncomeOutCategory(id);
@@ -142,7 +142,7 @@ public class BasicController {
     /*
      * 查询供应商类型
      * */
-    @RequestMapping(value = "/supplierTypes", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/supplierTypes", method = RequestMethod.GET)
     @ResponseBody
     public Result listSupplier() {
         List<SupplierType> list = basicService.listSupplierType();
@@ -154,7 +154,7 @@ public class BasicController {
      * 增加供应商类型
      *
      * */
-    @RequestMapping(value = "/supplierTypes", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/supplierTypes", method = RequestMethod.POST)
     @ResponseBody
     public Result addSupplier(@RequestBody SupplierType supplier) {
         int id = basicService.addSupplierType(supplier);
@@ -164,7 +164,7 @@ public class BasicController {
     /*
      * 修改供应商类型
      * */
-    @RequestMapping(value = "/supplierTypes/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/supplierTypes/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateSupplier(@RequestBody SupplierType supplier, @PathVariable Integer id) {
         basicService.updateSupplierType(supplier);
@@ -174,7 +174,7 @@ public class BasicController {
     /*
      * 删除供应商类型
      * */
-    @RequestMapping(value = "/supplierTypes/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/supplierTypes/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteSupplier(@PathVariable Integer id) {
         basicService.deleteSupplierType(id);
@@ -185,7 +185,7 @@ public class BasicController {
     /*
      * 查询项目类型
      * */
-    @RequestMapping(value = "/projectTypes", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/projectTypes", method = RequestMethod.GET)
     @ResponseBody
     public Result listProjectType() {
         List<ProjectType> list = basicService.listProjectType();
@@ -198,7 +198,7 @@ public class BasicController {
      * 增加项目类型
      *
      * */
-    @RequestMapping(value = "/projectTypes", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/projectTypes", method = RequestMethod.POST)
     @ResponseBody
     public Result addProjectType(@RequestBody ProjectType projectType) {
         int id = basicService.addProjectType(projectType);
@@ -208,7 +208,7 @@ public class BasicController {
     /*
      * 修改项目类型
      * */
-    @RequestMapping(value = "/projectTypes/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/projectTypes/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateProjectType(@RequestBody ProjectType projectType, @PathVariable Integer id) {
         basicService.updateProjectType(projectType);
@@ -218,7 +218,7 @@ public class BasicController {
     /*
      * 删除项目类型
      * */
-    @RequestMapping(value = "/projectTypes/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/projectTypes/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteProjectType(@PathVariable Integer id) {
         basicService.deleteProjectType(id);
@@ -229,7 +229,7 @@ public class BasicController {
     /*
      * 查询项目属性
      * */
-    @RequestMapping(value = "/projectPropertys", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/projectPropertys", method = RequestMethod.GET)
     @ResponseBody
     public Result listProjectProperty() {
         List<ProjectProperty> list = basicService.listProjectProperty();
@@ -242,7 +242,7 @@ public class BasicController {
      * 增加项目属性
      *
      * */
-    @RequestMapping(value = "/projectPropertys", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/projectPropertys", method = RequestMethod.POST)
     @ResponseBody
     public Result addProjectProperty(@RequestBody ProjectProperty projectProperty) {
         int id = basicService.addProjectProperty(projectProperty);
@@ -252,7 +252,7 @@ public class BasicController {
     /*
      * 修改项目属性
      * */
-    @RequestMapping(value = "/projectPropertys/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/projectPropertys/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateProjectProperty(@RequestBody ProjectProperty projectProperty, @PathVariable Integer id) {
         basicService.updateProjectProperty(projectProperty);
@@ -262,7 +262,7 @@ public class BasicController {
     /*
      * 删除项目属性
      * */
-    @RequestMapping(value = "/projectPropertys/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/projectPropertys/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteProjectProperty(@PathVariable Integer id) {
         basicService.deleteProjectProperty(id);
@@ -274,7 +274,7 @@ public class BasicController {
     /*
      * 查询省份
      * */
-    @RequestMapping(value = "/provinces", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/provinces", method = RequestMethod.GET)
     @ResponseBody
     public Result listProvince() {
         List<Province> list = basicService.listProvince();
@@ -282,7 +282,7 @@ public class BasicController {
         return result;
     }
 
-    @RequestMapping(value = "/provinces/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/provinces/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Result getProvince(@PathVariable Integer id) {
         Province p = basicService.getProvince(id);
@@ -294,7 +294,7 @@ public class BasicController {
      * 增加省份
      *
      * */
-    @RequestMapping(value = "/provinces", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/provinces", method = RequestMethod.POST)
     @ResponseBody
     public Result addProvince(@RequestBody Province province) {
         int id = basicService.addProvince(province);
@@ -304,7 +304,7 @@ public class BasicController {
     /*
      * 修改省份
      * */
-    @RequestMapping(value = "/provinces/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/provinces/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateProvince(@RequestBody Province province, @PathVariable Integer id) {
         basicService.updateProvince(province);
@@ -314,7 +314,7 @@ public class BasicController {
     /*
      * 删除省份
      * */
-    @RequestMapping(value = "/provinces/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/provinces/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteProvince(@PathVariable Integer id) {
         //basicService.deleteProvince(id);
@@ -332,14 +332,14 @@ public class BasicController {
     /*
      * 查询城市
      * */
-    @RequestMapping(value = "/citys", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/citys", method = RequestMethod.GET)
     @ResponseBody
     public Result listCity(Integer id) {
         List<City> list = basicService.listCity(id);
         Result result = new Result("查询成功", "200", list);
         return result;
     }
-    @RequestMapping(value = "/citys/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/citys/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Result getCity(@PathVariable Integer id) {
         City c = basicService.getCity(id);
@@ -352,7 +352,7 @@ public class BasicController {
     /*
      * 增加城市
      * */
-    @RequestMapping(value = "/citys", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/citys", method = RequestMethod.POST)
     @ResponseBody
     public Result addCity(@RequestBody City City) {
         int id = basicService.addCity(City);
@@ -362,7 +362,7 @@ public class BasicController {
     /*
      * 修改城市
      * */
-    @RequestMapping(value = "/citys/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/citys/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateCity(@RequestBody City City, @PathVariable Integer id) {
         basicService.updateCity(City);
@@ -372,7 +372,7 @@ public class BasicController {
     /*
      * 删除城市
      * */
-    @RequestMapping(value = "/citys/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/citys/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteCity(@PathVariable Integer id) {
         try {
@@ -387,7 +387,7 @@ public class BasicController {
     /*
      * 查询地区
      * */
-    @RequestMapping(value = "/areas", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic/areas", method = RequestMethod.GET)
     @ResponseBody
     public Result listArea(Integer id) {
         List<Area> list = basicService.listArea(id);
@@ -400,7 +400,7 @@ public class BasicController {
      * 增加地区
      *
      * */
-    @RequestMapping(value = "/areas", method = RequestMethod.POST)
+    @RequestMapping(value = "/basic/areas", method = RequestMethod.POST)
     @ResponseBody
     public Result addArea(@RequestBody Area Area) {
         int id = basicService.addArea(Area);
@@ -410,7 +410,7 @@ public class BasicController {
     /*
      * 修改地区
      * */
-    @RequestMapping(value = "/areas/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/basic/areas/{id}", method = RequestMethod.PUT)
     @ResponseBody
     public Result updateArea(@RequestBody Area Area, @PathVariable Integer id) {
         basicService.updateArea(Area);
@@ -420,7 +420,7 @@ public class BasicController {
     /*
      * 删除地区
      * */
-    @RequestMapping(value = "/areas/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/basic/areas/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Result deleteArea(@PathVariable Integer id) {
         basicService.deleteArea(id);
