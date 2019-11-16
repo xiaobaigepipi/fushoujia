@@ -1,5 +1,7 @@
 package com.lxh.fushoujia.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /*
@@ -14,7 +16,10 @@ public class FirstSend {
     private String process;//工序名称
     private String type; //派遣类型
     private String supplier; //供应商
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date sendTime; //派遣时间
+
     private Date endTime;  //项目结束时间
     private int cycle; //项目周期
     private String remark; //
@@ -27,6 +32,16 @@ public class FirstSend {
     private Date updateDate;
 
     private Project project;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    private Department department;
 
     public Project getProject() {
         return project;

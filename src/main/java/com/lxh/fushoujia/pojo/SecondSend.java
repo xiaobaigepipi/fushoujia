@@ -27,6 +27,16 @@ public class SecondSend {
     private User user;
     private FirstSend firstSend;
 
+    private String principal;
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
     public int getId() {
         return id;
     }

@@ -20,9 +20,9 @@ public class BudgetRemark {
     private String humanCost;   //人力成本
     private String serveCost;  //招待费
     private String travelCost;  //差旅费
-    private String otherCos;   //其他成本
+    private String otherCost;   //其他成本
     private String allCost;  //成本合计
-    private String VAT;   //增值税
+    private String vat;   //增值税
     private String grossProfit;  // 项目毛利
     private String incomeTax;  //所得税
     private String netProfit;  //项目净利
@@ -127,12 +127,12 @@ public class BudgetRemark {
         this.travelCost = travelCost;
     }
 
-    public String getOtherCos() {
-        return otherCos;
+    public String getOtherCost() {
+        return otherCost;
     }
 
-    public void setOtherCos(String otherCos) {
-        this.otherCos = otherCos;
+    public void setOtherCost(String otherCos) {
+        this.otherCost = otherCos;
     }
 
     public String getAllCost() {
@@ -143,12 +143,12 @@ public class BudgetRemark {
         this.allCost = allCost;
     }
 
-    public String getVAT() {
-        return VAT;
+    public String getVat() {
+        return vat;
     }
 
-    public void setVAT(String VAT) {
-        this.VAT = VAT;
+    public void setVat(String vat) {
+        this.vat = vat;
     }
 
     public String getGrossProfit() {

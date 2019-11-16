@@ -8,6 +8,10 @@
         select code from customer_info where isDelete = false order by id desc  limit 0, 1;
     </select>
 
+    <select id="listAllCustomer" parameterType="java.util.Map" resultType="Customer">
+        select * from customer_info where isDelete = false order by id desc;
+    </select>
+
     <!--查询全部并分页-->
     <select id="listCustomer" parameterType="java.util.Map" resultType="Customer">
         select * from customer_info

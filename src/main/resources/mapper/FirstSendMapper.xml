@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.FirstSendMapper">
+
+    <resultMap id="firstSendBean" type="FirstSend">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="process" jdbcType="VARCHAR" property="process" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="supplier" jdbcType="VARCHAR" property="supplier" />
+        <result column="sendTime" jdbcType="DATE" property="sendTime" />
+        <result column="endTime" jdbcType="DATE" property="endTime" />
+        <result column="cycle" jdbcType="INTEGER" property="cycle" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="special" jdbcType="BOOLEAN" property="special" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="departmentId" jdbcType="INTEGER" property="departmentId" />
+        <association property="department" javaType="Department">
+            <id column="did" jdbcType="INTEGER" property="id" />
+            <result column="name" jdbcType="VARCHAR" property="name" />
+            <result column="director" jdbcType="VARCHAR" property="director" />
+        </association>
+        <association property="project" javaType="Project">
+            <id column="pid" jdbcType="INTEGER" property="id" />
+            <result column="pname" jdbcType="VARCHAR" property="name" />
+            <result column="pcode" jdbcType="VARCHAR" property="code" />
+        </association>
+    </resultMap>
+
+
+    <select id="listFirstSend" resultMap="firstSendBean" parameterType="int">
+        select
+            f.process,
+            f.id,
+            f.type,
+            f.supplier,
+            f.sendTime,
+            f.endTime,
+            f.cycle,
+            f.remark,
+            f.status,
+            f.special,
+            f.projectId,
+            f.departmentId,
+            d.id as did,
+            d.name,
+            d.director
+        from first_send f left join department d on d.id = f.departmentId where f.projectId = #{projectId} and f.isDelete = false order by id asc;
+    </select>
+
+    <select id="getFirstSend" parameterType="int" resultMap="firstSendBean">
+        select
+            f.process,
+            f.id,
+            f.type,
+            f.supplier,
+            f.sendTime,
+            f.endTime,
+            f.cycle,
+            f.remark,
+            f.status,
+            f.special,
+            f.projectId,
+            f.departmentId,
+            d.id as did,
+            d.name,
+            d.director
+        from first_send f left join department d on d.id = f.departmentId where f.id = #{id} and f.isDelete = false;
+    </select>
+
+
+    <select id="listFirstSendByDepart" resultMap="firstSendBean" parameterType="java.util.Map">
+        select
+            f.process,
+            f.id,
+            f.type,
+            f.supplier,
+            f.sendTime,
+            f.endTime,
+            f.cycle,
+            f.remark,
+            f.status,
+            f.special,
+            f.projectId,
+            f.departmentId,
+            d.id as did,
+            d.name,
+            d.director,
+            p.id as pid,
+            p.name as pname,
+            p.code as pcode
+        from first_send f left join department d on d.id = f.departmentId left join project p on p.id = f.projectId where f.departmentId = #{departmentId} and p.status = 'approval' and f.isDelete = false and ( (p.name like concat('%', #{searchKey}, '%') or ifnull(#{searchKey}, '') = '') or (p.code like concat('%', #{searchKey}, '%') or ifnull(#{searchKey}, '') = '') ) order by id asc
+        <if test="page != null ">
+            limit #{start}, #{count};
+        </if>
+
+    </select>
+
+    <insert id="addFirstSend" parameterType="FirstSend" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into first_send (process, type, supplier, sendTime, endTime, cycle, status, remark, departmentId, special, projectId, createDate, updateDate) values ( #{process}, #{type}, #{supplier}, #{sendTime}, #{endTime}, #{cycle}, #{status}, #{remark}, #{departmentId}, #{special}, #{projectId}, now(), now());
+    </insert>
+
+    <update id="updateFirstSend" parameterType="FirstSend">
+        update first_send
+        <set>
+            <if test=" process != null">
+                process = #{process},
+            </if>
+            <if test=" type != null">
+                type = #{type},
+            </if>
+            <if test=" supplier != null">
+                supplier = #{supplier},
+            </if>
+            <if test=" sendTime != null">
+                sendTime = #{sendTime},
+            </if>
+            <if test=" endTime != null">
+                endTime = #{endTime},
+            </if>
+            <if test=" cycle != null">
+                cycle = #{cycle},
+            </if>
+            <if test=" remark != null">
+                remark = #{remark},
+            </if>
+            <if test=" status != null">
+                status = #{status},
+            </if>
+            <if test=" isDelete == true">
+                isDelete = true,
+            </if>
+            <if test=" departmentId != 0">
+                departmentId = #{departmentId},
+            </if>
+            <if test=" projectId != 0">
+                projectId = #{projectId},
+            </if>
+
+            special = #{special},
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

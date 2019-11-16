@@ -15,6 +15,7 @@ public interface SupplierMapper {
     int updateTSupplier(TSupplier ts);
     int getTotal(Map<String, Object> map);
     String getCode();
+    List<TSupplier> listAllTSupplier();
 
     List<ZSupplier> listZSupplier(Page page);
     int addZSupplier(ZSupplier ts);

@@ -34,6 +34,7 @@
             <if test=" searchKey != null">
               p.name like concat('%', #{searchKey}, '%') or p.client like concat('%', #{searchKey}, '%')
             </if>
+            and p.isDelete = false and p.status != 'invalid'
         </where>
         limit #{start}, #{count};
     </select>
@@ -46,11 +47,12 @@
             <if test=" searchKey != null">
                 p.name like concat('%', #{searchKey}, '%') or p.client like concat('%', #{searchKey}, '%')
             </if>
+            and p.isDelete = false and p.status != 'invalid'
         </where>
     </select>
 
     <select id="getBudget" resultType="Budget" parameterType="int">
-        select * from budget where id = #{id}
+        select * from budget where projectId = #{id}
     </select>
 
     <select id="getBudgetRemark" resultType="BudgetRemark" parameterType="int">
@@ -59,14 +61,14 @@
 
     <insert id="addBudget" parameterType="Budget" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
         insert into budget
-            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, VAT, grossProfit, incomeTax, netProfit, taxRate, status, createDate, updateDate, projectId)
-            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{VAT}, #{grossProfit}, #{incomeTax}, #{netProfit}, #{taxRate}, #{status}, now(), now(), #{projectId});
+            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, vat, grossProfit, incomeTax, netProfit, taxRate, status, createDate, updateDate, projectId)
+            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{vat}, #{grossProfit}, #{incomeTax}, #{netProfit}, #{taxRate}, #{status}, now(), now(), #{projectId});
     </insert>
 
     <insert id="addBudgetRemark" parameterType="BudgetRemark" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
         insert into budget_remark
-            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, VAT, grossProfit, incomeTax, netProfit, createDate, updateDate, budgetId)
-            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{VAT}, #{grossProfit}, #{incomeTax}, #{netProfit}, now(), now(), #{budgetId});
+            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, vat, grossProfit, incomeTax, netProfit, createDate, updateDate, budgetId)
+            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{vat}, #{grossProfit}, #{incomeTax}, #{netProfit}, now(), now(), #{budgetId});
     </insert>
 
     <update id="updateBudget" parameterType="Budget">
@@ -102,8 +104,8 @@
             <if test="allCost != null ">
                 allCost = #{allCost},
             </if>
-            <if test="VAT != null ">
-                VAT = #{VAT},
+            <if test="vat != null ">
+                vat = #{vat},
             </if>
             <if test="grossProfit != null ">
                 grossProfit = #{grossProfit},
@@ -158,8 +160,8 @@
             <if test="allCost != null ">
                 allCost = #{allCost},
             </if>
-            <if test="VAT != null ">
-                VAT = #{VAT},
+            <if test="vat != null ">
+                vat = #{vat},
             </if>
             <if test="grossProfit != null ">
                 grossProfit = #{grossProfit},

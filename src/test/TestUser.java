@@ -35,26 +35,21 @@ public class TestUser {
     @Autowired
     ProcessService processService;
 
+    @Autowired
+    FirstSendService firstSendService;
+
     @Test
     public void testData() {
-        List<User> list = userService.listUserAction();
-        List<User> lists = new ArrayList<>();
-        for (User u : list) {
-            List<UserRole> urs = u.getUserRoles();
-            sign:
-            for (UserRole ur : urs) {
-                List<RoleAction> ras = ur.getRole().getRoleActions();
-                for (RoleAction ra : ras) {
-                    Action a = ra.getAction();
-                    if (a.getCode().equals("project")) {
-                        lists.add(u);
-                        System.out.println(u.getName());
-                        break sign;
-                    }
-                }
-            }
-        }
+        Department d = new Department();
 
+        Map<String, Object> map = new HashMap<>();
+        map.put("start", 0);
+        map.put("count", 5);
+        map.put("searchKey", null);
+        map.put("departmentId", 32);
+        map.put("page","231");
+        List<FirstSend> list = firstSendService.listFirstSendByDepart(map);
+        System.out.println(list.size());
     }
 
 

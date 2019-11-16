@@ -1,8 +1,9 @@
 package com.lxh.fushoujia.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lxh.fushoujia.pojo.*;
-import com.lxh.fushoujia.service.BasicService;
-import com.lxh.fushoujia.service.UserService;
+import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,12 @@ public class AllPublicController {
     UserService userService;
     @Autowired
     BasicService basicService;
+    @Autowired
+    ProcessService processService;
+    @Autowired
+    CustomerService customerService;
+    @Autowired
+    SupplierService supplierService;
 
     /*
     * 获取未删除的部门信息
@@ -93,5 +100,32 @@ public class AllPublicController {
         }
 
         return new Result("查询成功", "200", lists);
+    }
+
+    @RequestMapping(value = "/process", method= RequestMethod.GET)
+    @ResponseBody
+    public Result listFirstProcess() {
+        ///PageHelper.startPage(page.getStart(), page.getCount());
+        List<FirstProcess> list = processService.listFirstProcess();
+        //PageInfo info = new PageInfo(list);
+        //page.setTotal((int)info.getTotal());
+        return new Result("查询成功", "200", list);
+    }
+
+    @RequestMapping(value = "/customers", method= RequestMethod.GET)
+    @ResponseBody
+    public Result listCustomers() {
+
+        List<Customer> list = customerService.listAllCustomer();
+
+        return new Result("查询成功", "200", list);
+    }
+
+    @RequestMapping(value = "/tsuppliers", method= RequestMethod.GET)
+    @ResponseBody
+    public Result listTSuppliers() {
+        List<TSupplier> list = supplierService.listAllTSupplier();
+
+        return new Result("查询成功", "200", list);
     }
 }

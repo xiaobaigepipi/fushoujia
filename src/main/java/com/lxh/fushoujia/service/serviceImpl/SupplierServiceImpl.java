@@ -76,4 +76,9 @@ public class SupplierServiceImpl implements SupplierService {
     public String getCode() {
         return supplierMapper.getCode();
     }
+
+    @Override
+    public List<TSupplier> listAllTSupplier() {
+        return supplierMapper.listAllTSupplier();
+    }
 }

@@ -46,4 +46,9 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getProject(Integer id) {
         return projectMapper.getProject(id);
     }
+
+    @Override
+    public String getCode() {
+        return projectMapper.getCode();
+    }
 }

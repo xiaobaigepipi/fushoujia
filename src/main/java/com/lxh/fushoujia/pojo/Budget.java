@@ -20,9 +20,9 @@ public class Budget {
     private BigDecimal humanCost;   //人力成本
     private BigDecimal serveCost;  //招待费
     private BigDecimal travelCost;  //差旅费
-    private BigDecimal otherCos;   //其他成本
+    private BigDecimal otherCost;   //其他成本
     private BigDecimal allCost;  //成本合计
-    private BigDecimal VAT;   //增值税
+    private BigDecimal vat;   //增值税
     private BigDecimal grossProfit;  // 项目毛利
     private BigDecimal incomeTax;  //所得税
     private BigDecimal netProfit;  //项目净利
@@ -105,12 +105,12 @@ public class Budget {
         this.travelCost = travelCost;
     }
 
-    public BigDecimal getOtherCos() {
-        return otherCos;
+    public BigDecimal getOtherCost() {
+        return otherCost;
     }
 
-    public void setOtherCos(BigDecimal otherCos) {
-        this.otherCos = otherCos;
+    public void setOtherCost(BigDecimal otherCost) {
+        this.otherCost = otherCost;
     }
 
     public BigDecimal getAllCost() {
@@ -121,12 +121,12 @@ public class Budget {
         this.allCost = allCost;
     }
 
-    public BigDecimal getVAT() {
-        return VAT;
+    public BigDecimal getVat() {
+        return vat;
     }
 
-    public void setVAT(BigDecimal VAT) {
-        this.VAT = VAT;
+    public void setVat(BigDecimal vat) {
+        this.vat = vat;
     }
 
     public BigDecimal getGrossProfit() {

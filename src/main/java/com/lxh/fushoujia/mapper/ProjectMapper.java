@@ -12,4 +12,5 @@ public interface ProjectMapper {
     int updateProject(Project project);
     int getTotal(Map<String, Object> map);
     Project getProject(@Param("id") Integer id);
+    String getCode();
 }

@@ -151,9 +151,9 @@
             <if test="email != null">
                 email = #{email},
             </if>
-            <if test="failNumber != 0">
+
                 failNumber = #{failNumber},
-            </if>
+
             <if test="departmentId != 0">
                 departmentId = #{departmentId},
             </if>

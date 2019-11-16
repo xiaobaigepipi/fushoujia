@@ -13,4 +13,5 @@ public interface CustomerService {
     int updateCustomer(Customer customer);
     int getTotal(Map<String, Object> map);
     String getCode();
+    List<Customer> listAllCustomer();
 }

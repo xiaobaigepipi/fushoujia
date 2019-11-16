@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.SecondSendMapper">
+
+    <select id="listSecondSend" resultType="SecondSend" parameterType="int">
+        select * from second_send where firstId = #{firstId} order by id asc;
+    </select>
+
+    <select id="listSecondSendByUser" resultType="SecondSend" parameterType="int">
+        select * from second_send where userId = #{userId} order by id desc;
+    </select>
+
+
+    <select id="getSecondSend" parameterType="int" resultType="SecondSend">
+        select * from second_send where id = #{id};
+    </select>
+
+    <insert id="addSecondSend" parameterType="SecondSend" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        insert into second_send (process, sendTime, endTime, cycle, remark, status, special, userId, firstId, createDate, updateDate) values (#{process}, #{sendTime}, #{endTime}, #{cycle}, #{remark}, #{status}, #{special}, #{userId}, #{firstId}, now(), now());
+    </insert>
+
+    <update id="updateSencondSend" parameterType="SecondSend">
+        update second_send
+        <set>
+            <if test="process != null">
+                process = #{process},
+            </if>
+            <if test="sendTime != null">
+                sendTime = #{sendTime},
+            </if>
+            <if test="endTime != null">
+                endTime = #{endTime},
+            </if>
+            <if test="cycle != null">
+                cycle = #{cycle},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="special != null">
+                special = #{special},
+            </if>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+            <if test="firstId != null">
+                firstId = #{firstId},
+            </if>
+            <if test="isDelete != false">
+                isDelete = true,
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id};
+    </update>
+
+</mapper>

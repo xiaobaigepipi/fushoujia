@@ -4,6 +4,9 @@
 <mapper namespace="com.lxh.fushoujia.mapper.SupplierMapper">
 
     <!--查询技术供应商-->
+    <select id="listAllTSupplier" parameterType="java.util.Map" resultType="TSupplier">
+        select * from tsupplier_info where isDelete = false order by id desc;
+    </select>
     <select id="listTSupplier" parameterType="java.util.Map" resultType="TSupplier">
         select * from tsupplier_info
             <where>

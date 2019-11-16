@@ -1,7 +1,10 @@
 package com.lxh.fushoujia.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /*
  * @PackageName: com.lxh.fushoujia.pojo
@@ -16,6 +19,8 @@ public class Project {
     private String code;
     private String type; //项目类型
     private String property; //项目属性
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date projectDate; //立项日期
     private String client; //甲方客户
     private String origin; //项目来源
@@ -30,16 +35,46 @@ public class Project {
     private String supplier; //供应商
     private String description; //项目描述
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate; //项目开始日期
+    @DateTimeFormat(pattern = "yy-MM-dd")
     private Date endDate; //项目结束日期
     private int cycle; //项目周期 单位：天
     private String status; //项目状态
     private String contract; //项目合同状态
+    private String payment; //款项状态
+    private String departments; //实施所
     private Date createDate;
     private Date updateDate;
     private boolean isDelete;
     private int userId;
     private User user;
+
+    private List<FirstSend> firstSends;
+
+    public List<FirstSend> getFirstSends() {
+        return firstSends;
+    }
+
+    public void setFirstSends(List<FirstSend> firstSends) {
+        this.firstSends = firstSends;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public String getDepartments() {
+        return departments;
+    }
+
+    public void setDepartments(String departments) {
+        this.departments = departments;
+    }
 
     public int getId() {
         return id;

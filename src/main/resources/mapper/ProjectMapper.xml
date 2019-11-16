@@ -4,9 +4,9 @@
 <mapper namespace="com.lxh.fushoujia.mapper.ProjectMapper">
     <insert id="addProject" parameterType="Project" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
         insert into project
-            (name, code, type, property, projectDate, origin, client, province, city, workPlace, buildArea, landArea, subject, principal, tenderType, supplier, description, startDate, endDate, cycle, status, contract, createDate, updateDate, userId)
+            (name, code, type, property, projectDate, origin, client, province, city, workPlace, buildArea, landArea, subject, principal, tenderType, supplier, description, startDate, endDate, cycle, status, contract, createDate, updateDate, userId, payment, departments)
             values
-            (#{name}, #{code}, #{type}, #{property}, #{projectDate}, #{origin}, #{client}, #{province}, #{city}, #{workPlace}, #{buildArea}, #{landArea}, #{subject}, #{principal}, #{tenderType}, #{supplier}, #{description}, #{startDate}, #{endDate}, #{cycle}, #{status}, #{contract}, now(), now(), #{userId});
+            (#{name}, #{code}, #{type}, #{property}, #{projectDate}, #{origin}, #{client}, #{province}, #{city}, #{workPlace}, #{buildArea}, #{landArea}, #{subject}, #{principal}, #{tenderType}, #{supplier}, #{description}, #{startDate}, #{endDate}, #{cycle}, #{status}, #{contract}, now(), now(), #{userId}, #{payment}, #{departments});
     </insert>
 
     <select id="listProject" parameterType="java.util.Map" resultType="Project">
@@ -98,13 +98,13 @@
                     client = #{client},
                 </if>
                 <if test="province != null">
-                    province = #{name},
+                    province = #{province},
                 </if>
                 <if test="city != null">
-                    city = #{name},
+                    city = #{city},
                 </if>
                 <if test="workPlace != null">
-                    workPlace = #{name},
+                    workPlace = #{workPlace},
                 </if>
                 <if test="buildArea != null">
                     buildArea = #{buildArea},
@@ -133,7 +133,7 @@
                 <if test="endDate != null">
                     endDate = #{endDate},
                 </if>
-                <if test="cycle != null">
+                <if test="cycle != 0">
                     cycle = #{cycle},
                 </if>
                 <if test="status != null">
@@ -145,11 +145,21 @@
                 <if test="isDelete != false">
                     isDelete = true,
                 </if>
-                <if test="userId != null">
+                <if test="userId != 0">
                     userId = #{userId},
+                </if>
+                <if test="payment != null">
+                    payment = #{payment},
+                </if>
+                <if test="departments != null">
+                    departments = #{departments},
                 </if>
                 updateDate =  now()
             </set>
         where id = #{id};
     </update>
+
+    <select id="getCode" resultType="String">
+        select code from project order by id desc limit 0, 1;
+    </select>
 </mapper>

@@ -50,4 +50,9 @@ public class CustomerServiceImpl implements CustomerService {
     public String getCode() {
         return customerMapper.getCode();
     }
+
+    @Override
+    public List<Customer> listAllCustomer() {
+        return customerMapper.listAllCustomer();
+    }
 }
