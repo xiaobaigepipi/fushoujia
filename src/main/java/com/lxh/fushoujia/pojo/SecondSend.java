@@ -1,5 +1,7 @@
 package com.lxh.fushoujia.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /*
@@ -12,6 +14,8 @@ import java.util.Date;
 public class SecondSend {
     private int id;
     private String process;//工序名称
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date sendTime; //派遣时间
     private Date endTime;  //结束时间
     private int cycle; //派遣周期

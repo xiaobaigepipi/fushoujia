@@ -32,4 +32,5 @@ public interface UserMapper {
     //删除用户角色表
     void deleteUserRoles(@Param("id") int id);
     List<User> listUserAction();
+    List<User> listAllUser();
 }

@@ -31,4 +31,5 @@ public interface UserService {
     void deleteUserRole(int id);
     //查找全部用户和权限
     List<User> listUserAction();
+    List<User> listAllUser();
 }

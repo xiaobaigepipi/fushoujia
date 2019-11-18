@@ -5,10 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.util.Result;
+import com.lxh.fushoujia.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,6 +112,25 @@ public class AllPublicController {
         //PageInfo info = new PageInfo(list);
         //page.setTotal((int)info.getTotal());
         return new Result("查询成功", "200", list);
+    }
+
+    @RequestMapping(value = "/process/second", method= RequestMethod.GET)
+    @ResponseBody
+    public Result listSecondProcess(@RequestParam("firstProcess") String firstProcess) {
+        ///PageHelper.startPage(page.getStart(), page.getCount());
+        firstProcess = Util.decode(firstProcess);
+        List<FirstProcess> list = processService.listFirstProcess();
+        int id = 0;
+        for (FirstProcess f : list) {
+            if (firstProcess.equals(f.getName())) {
+                id = f.getId();
+                break;
+            }
+        }
+        List<SecondProcess> seconds = processService.listSecondProcess(id);
+        //PageInfo info = new PageInfo(list);
+        //page.setTotal((int)info.getTotal());
+        return new Result("查询成功", "200", seconds);
     }
 
     @RequestMapping(value = "/customers", method= RequestMethod.GET)

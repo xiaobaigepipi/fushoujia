@@ -154,6 +154,12 @@
                 <if test="departments != null">
                     departments = #{departments},
                 </if>
+                <if test="accept != null">
+                    accept = #{accept},
+                </if>
+                <if test="acceptDate != null">
+                    acceptDate = #{acceptDate},
+                </if>
                 updateDate =  now()
             </set>
         where id = #{id};
@@ -162,4 +168,16 @@
     <select id="getCode" resultType="String">
         select code from project order by id desc limit 0, 1;
     </select>
+
+    <insert id="addDocument" keyColumn="id" useGeneratedKeys="true" keyProperty="id" parameterType="Document">
+        insert into document (name, url, createDate, updateDate, projectId) values (#{name}, #{url}, now(), now(), #{projectId});
+    </insert>
+
+    <select id="listDocumentByProject" parameterType="int" resultType="Document">
+        select * from document where projectId = #{projectId} order by id asc;
+    </select>
+
+    <delete id="deleteDocument" parameterType="int">
+        delete from document where id = #{id};
+    </delete>
 </mapper>

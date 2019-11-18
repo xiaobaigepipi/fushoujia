@@ -1,5 +1,6 @@
 package com.lxh.fushoujia.mapper;
 
+import com.lxh.fushoujia.pojo.Document;
 import com.lxh.fushoujia.pojo.Project;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,4 +14,8 @@ public interface ProjectMapper {
     int getTotal(Map<String, Object> map);
     Project getProject(@Param("id") Integer id);
     String getCode();
+
+    int addDocument(Document document);
+    List<Document> listDocumentByProject(@Param("projectId") Integer id);
+    int deleteDocument(@Param("id") Integer id);
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /*
  * @PackageName: com.lxh.fushoujia.service.serviceImpl
@@ -41,7 +42,7 @@ public class SecondSendServiceImpl implements SecondSendService {
     }
 
     @Override
-    public List<SecondSend> listSecondSendByUser(Integer id) {
-        return secondSendMapper.listSecondSendByUser(id);
+    public List<SecondSend> listSecondSendByUser(Map<String, Object> map) {
+        return secondSendMapper.listSecondSendByUser(map);
     }
 }

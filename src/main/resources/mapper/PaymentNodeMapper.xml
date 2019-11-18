@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.PaymentNodeMapper">
+    <select id="listPaymentNode" parameterType="int" resultType="PaymentNode">
+        select * from payment_node where projectId = #{projectId} order by paymentTime asc;
+    </select>
+    <update id="updatePaymentNode" parameterType="PaymentNode" >
+        update payment_node
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+    <insert id="addPaymentNode" parameterType="PaymentNode" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into payment_node (name, process, paymentTime, status, amount, projectId, createDate, updateDate) values (#{name}, #{process}, #{paymentTime}, #{status}, #{amount}, #{projectId}, now(), now());
+    </insert>
+</mapper>

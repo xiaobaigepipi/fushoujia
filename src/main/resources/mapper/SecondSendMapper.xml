@@ -4,11 +4,19 @@
 <mapper namespace="com.lxh.fushoujia.mapper.SecondSendMapper">
 
     <select id="listSecondSend" resultType="SecondSend" parameterType="int">
-        select * from second_send where firstId = #{firstId} order by id asc;
+        select * from second_send where firstId = #{firstId} and isDelete = false order by id asc ;
     </select>
 
-    <select id="listSecondSendByUser" resultType="SecondSend" parameterType="int">
-        select * from second_send where userId = #{userId} order by id desc;
+    <select id="listSecondSendByUser" resultType="SecondSend" parameterType="java.util.Map">
+        select * from second_send
+        <where>
+            userId = #{userId} and  isDelete = false
+            <if test="searchKey != null">
+                and process like concat('%', #{searchKey}, '%')
+            </if>
+
+        </where>
+        order by sendTime desc limit #{start}, #{count};
     </select>
 
 
@@ -17,10 +25,10 @@
     </select>
 
     <insert id="addSecondSend" parameterType="SecondSend" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
-        insert into second_send (process, sendTime, endTime, cycle, remark, status, special, userId, firstId, createDate, updateDate) values (#{process}, #{sendTime}, #{endTime}, #{cycle}, #{remark}, #{status}, #{special}, #{userId}, #{firstId}, now(), now());
+        insert into second_send (process, sendTime, endTime, cycle, remark, status, special, userId, firstId, createDate, updateDate, principal) values (#{process}, #{sendTime}, #{endTime}, #{cycle}, #{remark}, #{status}, #{special}, #{userId}, #{firstId}, now(), now(), #{principal});
     </insert>
 
-    <update id="updateSencondSend" parameterType="SecondSend">
+    <update id="updateSecondSend" parameterType="SecondSend">
         update second_send
         <set>
             <if test="process != null">
@@ -41,18 +49,21 @@
             <if test="status != null">
                 status = #{status},
             </if>
-            <if test="special != null">
-                special = #{special},
-            </if>
-            <if test="userId != null">
+
+
+            <if test="userId != 0">
                 userId = #{userId},
             </if>
-            <if test="firstId != null">
+            <if test="firstId != 0">
                 firstId = #{firstId},
             </if>
             <if test="isDelete != false">
                 isDelete = true,
             </if>
+            <if test="principal != null">
+                principal = #{principal},
+            </if>
+            special = #{special},
             updateDate = now()
         </set>
         where id = #{id};

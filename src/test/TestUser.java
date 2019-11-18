@@ -1,6 +1,7 @@
 import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.pojo.Page;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +38,16 @@ public class TestUser {
 
     @Autowired
     FirstSendService firstSendService;
+    @Autowired
+    SecondSendService secondSendService;
 
     @Test
     public void testData() {
-        Department d = new Department();
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("start", 0);
-        map.put("count", 5);
-        map.put("searchKey", null);
-        map.put("departmentId", 32);
-        map.put("page","231");
-        List<FirstSend> list = firstSendService.listFirstSendByDepart(map);
-        System.out.println(list.size());
+        String filename = "hadka.jpg";
+        //获取文件后缀名
+        int index = StringUtils.indexOf(filename, '.');
+        String suffix = StringUtils.substring(filename, index+1);
+        System.out.println(suffix);
     }
 
 

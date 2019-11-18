@@ -37,6 +37,10 @@
          limit #{start}, #{count}) u left join user_role ur on u.id = ur.userId left join role  r on ur.roleId = r.id left join department d on u.departmentId = d.id left join position_ p on u.positionId = p.id;
     </select>
 
+    <select id="listAllUser" resultMap="userBean" >
+        select u.id as id, u.failNumber as failNumber, ur.id as urid, r.id as rid, r.name as rname, u.name as name, u.email as email, d.id as did, d.name as dname, p.id as pid, p.name as pname from user u left join user_role ur on u.id = ur.userId left join role  r on ur.roleId = r.id left join department d on u.departmentId = d.id left join position_ p on u.positionId = p.id;
+    </select>
+
     <!--查询项目负责人-->
     <resultMap id="projectUser" type="User">
         <id column="id" jdbcType="INTEGER" property="id" />

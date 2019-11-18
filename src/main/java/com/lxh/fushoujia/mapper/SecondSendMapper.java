@@ -4,6 +4,7 @@ import com.lxh.fushoujia.pojo.SecondSend;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SecondSendMapper {
 
@@ -11,5 +12,5 @@ public interface SecondSendMapper {
     int addSecondSend(SecondSend s);
     int updateSecondSend(SecondSend s);
     SecondSend getSecondSend(@Param("id") int id);
-    List<SecondSend> listSecondSendByUser(@Param("userId") Integer id);
+    List<SecondSend> listSecondSendByUser(Map<String, Object> map);
 }

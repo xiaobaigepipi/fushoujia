@@ -52,8 +52,29 @@ public class Project {
 
     private List<FirstSend> firstSends;
 
+    private String accept;
+
+    @DateTimeFormat(pattern = "yy-MM-dd")
+    private Date acceptDate;
+
     public List<FirstSend> getFirstSends() {
         return firstSends;
+    }
+
+    public String getAccept() {
+        return accept;
+    }
+
+    public void setAccept(String accept) {
+        this.accept = accept;
+    }
+
+    public Date getAcceptDate() {
+        return acceptDate;
+    }
+
+    public void setAcceptDate(Date acceptDate) {
+        this.acceptDate = acceptDate;
     }
 
     public void setFirstSends(List<FirstSend> firstSends) {

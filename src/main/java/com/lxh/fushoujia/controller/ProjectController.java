@@ -1,5 +1,6 @@
 package com.lxh.fushoujia.controller;
 
+import com.github.pagehelper.util.StringUtil;
 import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.BudgetService;
 import com.lxh.fushoujia.service.FirstSendService;
@@ -8,10 +9,15 @@ import com.lxh.fushoujia.util.ChineseUtil;
 import com.lxh.fushoujia.util.ProjectStatus;
 import com.lxh.fushoujia.util.Result;
 import com.lxh.fushoujia.util.Util;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /*
@@ -32,6 +38,7 @@ public class ProjectController {
 
     @Autowired
     FirstSendService firstSendService;
+
 
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     @ResponseBody
@@ -263,6 +270,92 @@ public class ProjectController {
         return new Result("查询成功", "200", page, projects);
     }
 
+
+
+    @RequestMapping(value = "/budget/payment", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listPaymentNode(@RequestParam("projectId") Integer id) {
+       List<PaymentNode> list = projectService.listPaymentNode(id);
+       return new Result("查询成功", "200", list);
+    }
+
+    @RequestMapping(value = "/budget/payment", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result listPaymentNode(@RequestBody PaymentNode paymentNode) {
+        projectService.updatePaymentNode(paymentNode);
+        return new Result("修改成功", "200");
+    }
+
+    @RequestMapping(value = "/project/payment", method = RequestMethod.POST)
+    @ResponseBody
+    public Result addPaymentNode(@RequestBody List<PaymentNode> paymentNodes) {
+        int projectId = 0;
+        for (PaymentNode p : paymentNodes) {
+            projectId = p.getProjectId();
+            projectService.addPaymentNode(p);
+        }
+        Project pp = new Project();
+        pp.setId(projectId);
+        pp.setContract(ProjectStatus.contract);
+        pp.setAcceptDate(new Date());
+        projectService.updateProject(pp);
+        return new Result("修改成功", "200");
+    }
+
+    @RequestMapping(value = "/accept/post", method = RequestMethod.POST)
+    @ResponseBody
+    public Result addImg(@RequestParam("projectId") Integer projectId, @RequestParam("files") MultipartFile[] files, HttpServletRequest request) {
+        if (files == null || files.length == 0) {
+            return new Result("上传成功", "200");
+        }
+        //获取保存文件的路径
+        String path = request.getServletContext().getRealPath("/src/static/img/project");
+        for (int i = 0; i < files.length; i++) {
+            //获取原文件名
+            String filename = files[i].getOriginalFilename();
+            //获取文件后缀名
+            int index = StringUtils.indexOf(filename, '.');
+            String suffix = StringUtils.substring(filename, index+1);
+            //生成新的文件名
+            long times = new Date().getTime();
+            int random = Math.round((float)Math.random() * 10000);
+            System.out.println(random);
+            String newFilename = times + "" + random + "." + suffix;
+
+            Document document = new Document();
+            document.setName(filename);
+            document.setUrl("/src/static/img/project/" + newFilename);
+            document.setProjectId(projectId);
+            projectService.addDocument(document);
+
+            String newpath= "D:\\web\\fushoujia\\src\\static\\img\\project";
+
+            File file = new File(newpath, newFilename);
+            if (!file.getParentFile().exists()) {
+                file.mkdirs();
+            }
+
+            //传递文件
+            try{
+                files[i].transferTo(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Project p = new Project();
+        p.setId(projectId);
+        p.setAccept(ProjectStatus.accept);
+        projectService.updateProject(p);
+        return new Result("上传成功", "200");
+    }
+
+
+    @RequestMapping(value = "/accept/get", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listImg(@RequestParam("projectId") Integer id) {
+        List<Document> list = projectService.listDocumentByProject(id);
+        return new Result("查询成功", "200", list);
+    }
 
 }
 

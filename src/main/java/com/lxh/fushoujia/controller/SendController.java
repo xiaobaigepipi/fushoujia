@@ -1,10 +1,7 @@
 package com.lxh.fushoujia.controller;
 
 import com.lxh.fushoujia.pojo.*;
-import com.lxh.fushoujia.service.BasicService;
-import com.lxh.fushoujia.service.FirstSendService;
-import com.lxh.fushoujia.service.ProjectService;
-import com.lxh.fushoujia.service.UserService;
+import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.util.JwtUtil;
 import com.lxh.fushoujia.util.ProjectStatus;
 import com.lxh.fushoujia.util.Result;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Path;
 import java.util.*;
 
 /*
@@ -40,6 +38,9 @@ public class SendController {
 
     @Autowired
     BasicService basicService;
+
+    @Autowired
+    SecondSendService secondSendService;
 
     @RequestMapping(value = "/project/firstSends", method = RequestMethod.POST)
     @ResponseBody
@@ -91,6 +92,23 @@ public class SendController {
         project.setId(projectId);
         project.setStatus(ProjectStatus.toApproval);
         projectService.updateProject(project);
+        return new Result("修改成功", "200");
+    }
+
+    @RequestMapping(value = "/all/firstSends", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result updateFirstSend(@RequestBody FirstSend first) {
+        firstSendService.updateFirstSend(first);
+        if (first.getStatus().equals("invalid")) {
+            List<SecondSend> list = secondSendService.listSecondSend(first.getId());
+            if (list.size() == 0) {
+                return new Result("修改成功", "200");
+            }
+            for (SecondSend s : list) {
+                s.setStatus("invalid");
+                secondSendService.updateSecondSend(s);
+            }
+        }
         return new Result("修改成功", "200");
     }
 
@@ -150,7 +168,9 @@ public class SendController {
             return new Result("查询成功", "all");
         }
         boolean b = false;
+        boolean b1 = false;
         if (name.equals("所长")) {
+            b1 = true;
             for (User u : lists) {
 
                 if (u.getId() == user.getId()) {
@@ -163,7 +183,7 @@ public class SendController {
         if (b) {
             return new Result("查询成功", "all");
         }
-        if (!b){
+        if (b1){
             return new Result("查询成功", "director");
         }
 
@@ -179,4 +199,98 @@ public class SendController {
         return new Result("查询成功", "200", firstSend);
     }
 
+    @RequestMapping(value = "/send/users", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getStaff() {
+        List<User> users = userService.listAllUser();
+        List<User> list = new ArrayList<>();
+        for (User u : users) {
+            if (u.getPosition().getName().equals("设计师") || u.getPosition().getName().equals("所长")) {
+                list.add(u);
+            }
+        }
+        return new Result("查询成功", "200", list);
+    }
+
+
+    @RequestMapping(value = "/send/seconds", method = RequestMethod.POST)
+    @ResponseBody
+    public Result addSecondSend(@RequestBody List<SecondSend> secondSends) {
+        int firstId = 0;
+        for (SecondSend s : secondSends) {
+            long start = s.getSendTime().getTime();
+            firstId = s.getFirstId();
+            s.setEndTime(new Date(start + s.getCycle()*1000*60*60*24));
+            secondSendService.addSecondSend(s);
+        }
+        FirstSend f = new FirstSend();
+        f.setId(firstId);
+        f.setStatus(ProjectStatus.send);
+        firstSendService.updateFirstSend(f);
+        return new Result("新增成功", "200");
+    }
+
+    @RequestMapping(value = "/send/seconds", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listSecondSend(@RequestParam("firstId") Integer firstId) {
+        List<SecondSend> list = secondSendService.listSecondSend(firstId);
+        return new Result("查询成功", "200", list);
+    }
+
+    @RequestMapping(value = "/send/seconds", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result updateSecondSend(@RequestBody List<SecondSend> secondSends) {
+        for (SecondSend s : secondSends) {
+            long start = s.getSendTime().getTime();
+            s.setEndTime(new Date(start + s.getCycle()*1000*60*60*24));
+            secondSendService.updateSecondSend(s);
+        }
+        return new Result("修改成功", "200");
+    }
+
+    @RequestMapping(value = "/send/seconds/user", method = RequestMethod.PUT)
+    @ResponseBody
+    public Result updateSecondSend(@RequestBody SecondSend secondSend) {
+
+        secondSendService.updateSecondSend(secondSend);
+        return new Result("修改成功", "200");
+    }
+
+
+    @RequestMapping(value = "/send/seconds", method = RequestMethod.DELETE)
+    @ResponseBody
+    public Result deleteSecondSend(@RequestParam("secondId") Integer secondId) {
+        SecondSend s = new SecondSend();
+        s.setId(secondId);
+        s.setDelete(true);
+        secondSendService.updateSecondSend(s);
+        return new Result("删除成功", "200");
+    }
+
+    @RequestMapping(value = "/send/seconds/user", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listSecondSendByUser(Page page, HttpServletRequest request) {
+        page.setSearchKey(Util.decode(page.getSearchKey()));
+        Map<String, Object> map = new HashMap<>();
+        String token = request.getHeader("token");
+        int id = JwtUtil.getUserId(token);
+        map.put("userId", id);
+        map.put("start", page.getStart());
+        map.put("count", page.getCount());
+        map.put("searchKey", page.getSearchKey());
+        List<SecondSend> list = secondSendService.listSecondSendByUser(map);
+
+        map.put("start", 0);
+        map.put("count", Integer.MAX_VALUE);
+        List<SecondSend> max = secondSendService.listSecondSendByUser(map);
+        page.setTotal(max.size());
+        return new Result("删除成功", "200", page, list);
+    }
+
+    @RequestMapping(value = "/send/seconds/user/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getSecondSend(@PathVariable Integer id ) {
+        SecondSend second = secondSendService.getSecondSend(id);
+        return new Result("删除成功", "200", second);
+    }
 }
