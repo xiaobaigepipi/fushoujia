@@ -17,5 +17,9 @@ public interface ProjectMapper {
 
     int addDocument(Document document);
     List<Document> listDocumentByProject(@Param("projectId") Integer id);
+    List<Document> listDocumentByContract(@Param("contractId") Integer id);
     int deleteDocument(@Param("id") Integer id);
+
+    List<Project> listAllProject();
+    Document getDocument(Integer id);
 }

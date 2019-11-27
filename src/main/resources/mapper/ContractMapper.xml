@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.ContractMapper">
+    <resultMap id="contractBean" type="Contract">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="code" jdbcType="VARCHAR" property="code" />
+        <result column="client" jdbcType="VARCHAR" property="client" />
+        <result column="contact" jdbcType="VARCHAR" property="contact" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+        <result column="signDate" jdbcType="DATE" property="signDate" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="remark1" jdbcType="VARCHAR" property="remark1" />
+        <result column="remark2" jdbcType="VARCHAR" property="remark2" />
+        <result column="remark3" jdbcType="VARCHAR" property="remark3" />
+        <result column="remark4" jdbcType="VARCHAR" property="remark4" />
+        <result column="remark5" jdbcType="VARCHAR" property="remark5" />
+        <association property="project" javaType="Project">
+            <id column="pid" jdbcType="INTEGER" property="id" />
+            <result column="pcode" jdbcType="VARCHAR" property="code" />
+            <result column="pname" jdbcType="VARCHAR" property="name" />
+            <result column="principal" jdbcType="VARCHAR" property="principal" />
+        </association>
+    </resultMap>
+
+    <select id="listContract" resultMap="contractBean" parameterType="java.util.Map">
+        select c.*,
+            p.name as pname,
+            p.id as pid,
+            p.code as pcode,
+            p.principal
+        from contract c left join project p on p.id = c.projectId
+        <where>
+            <if test="searchKey != null">
+                p.name like concat('%', #{searchKey}, '%') or p.code like concat('%', #{searchKey}, '%')
+            </if>
+            and c.type = #{type}
+        </where>
+        limit #{start}, #{count}
+    </select>
+
+    <select id="getContract" resultMap="contractBean" parameterType="int">
+        select c.*,
+        p.name as pname,
+        p.id as pid,
+        p.code as pcode,
+        p.principal
+        from contract c left join project p on p.id = c.projectId
+        where c.id = #{id}
+    </select>
+
+    <insert id="addContract" parameterType="Contract" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into contract (code, client, contact, amount, projectId, type, signDate, remark1, remark2, remark3, remark4, remark5, createDate, updateDate) values (#{code}, #{client}, #{contact}, #{amount}, #{projectId}, #{type}, #{signDate}, #{remark1}, #{remark2}, #{remark3}, #{remark4}, #{remark5}, now(), now());
+    </insert>
+
+    <delete id="deleteContract" parameterType="int">
+        delete from contract where id = #{id};
+    </delete>
+
+    <update id="updateContract" parameterType="Contract">
+        update contract
+        <set>
+            <if test="client != null">
+                client = #{client},
+            </if>
+            <if test="contact != null">
+                contact = #{contact},
+            </if>
+            <if test="amount != 0">
+                amount = #{amount},
+            </if>
+            <if test="signDate != null">
+                signDate = #{signDate},
+            </if>
+            <if test="remark1 != null">
+                remark1 = #{remark1},
+            </if>
+            <if test="remark2 != null">
+            remark2= #{remark2},
+            </if>
+            <if test="remark3 != null">
+                remark3 = #{remark3},
+            </if>
+            <if test="remark4 != null">
+                remark4 = #{remark4},
+            </if>
+            <if test="remark5 != null">
+                remark5 = #{remark5},
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getTotal" resultType="int">
+        select count(*) from contract where projectId = #{projectId} and type = #{type}
+    </select>
+</mapper>

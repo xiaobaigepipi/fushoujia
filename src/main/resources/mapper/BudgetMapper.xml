@@ -34,7 +34,7 @@
             <if test=" searchKey != null">
               p.name like concat('%', #{searchKey}, '%') or p.client like concat('%', #{searchKey}, '%')
             </if>
-            and p.isDelete = false and p.status != 'invalid'
+            and p.isDelete = false and p.status != 'invalid' and b.accounting = false
         </where>
         limit #{start}, #{count};
     </select>
@@ -47,7 +47,7 @@
             <if test=" searchKey != null">
                 p.name like concat('%', #{searchKey}, '%') or p.client like concat('%', #{searchKey}, '%')
             </if>
-            and p.isDelete = false and p.status != 'invalid'
+            and p.isDelete = false and p.status != 'invalid' and b.accounting = false
         </where>
     </select>
 
@@ -61,8 +61,8 @@
 
     <insert id="addBudget" parameterType="Budget" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
         insert into budget
-            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, vat, grossProfit, incomeTax, netProfit, taxRate, status, createDate, updateDate, projectId)
-            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{vat}, #{grossProfit}, #{incomeTax}, #{netProfit}, #{taxRate}, #{status}, now(), now(), #{projectId});
+            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, vat, grossProfit, incomeTax, netProfit, taxRate, status, createDate, updateDate, projectId, accounting)
+            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{vat}, #{grossProfit}, #{incomeTax}, #{netProfit}, #{taxRate}, #{status}, now(), now(), #{projectId}, #{accounting});
     </insert>
 
     <insert id="addBudgetRemark" parameterType="BudgetRemark" keyColumn="id" useGeneratedKeys="true" keyProperty="id">

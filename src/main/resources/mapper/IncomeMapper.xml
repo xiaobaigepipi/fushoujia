@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.IncomeMapper">
+
+    <resultMap id="incomeBean" type="Income">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="account" jdbcType="VARCHAR" property="account" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+        <result column="netAmount" jdbcType="DECIMAL" property="netAmount" />
+        <result column="cost" jdbcType="DECIMAL" property="cost" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="outDate" jdbcType="DATE" property="outDate" />
+
+        <association property="project" javaType="Project">
+            <id column="pid" jdbcType="INTEGER" property="id" />
+            <result column="pname" jdbcType="VARCHAR" property="name" />
+        </association>
+    </resultMap>
+
+    <insert id="addIncome" parameterType="Income" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into income (remark, account, amount, netAmount, cost, projectId, type, outDate, createDate, updateDate) values (#{remark}, #{account}, #{amount}, #{netAmount}, #{cost}, #{projectId}, #{type}, #{outDate}, now(), now());
+    </insert>
+
+    <delete id="deleteIncome" parameterType="int">
+        delete from income where id = #{id};
+    </delete>
+
+    <update id="updateIncome" parameterType="Income">
+        update income
+        <set>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="account != null">
+                account = #{account},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="netAmount != null">
+                netAmount = #{netAmount},
+            </if>
+            <if test="projectId != null">
+                projectId = #{projectId},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="cost != null">
+              cost = #{cost},
+            </if>
+            <if test="outDate != null">
+                outDate = #{outDate},
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="listIncome" parameterType="Page" resultMap="incomeBean">
+        select
+            i.remark,
+            i.id,
+            i.account,
+            i.amount,
+            i.netAmount,
+            i.cost,
+            i.projectId,
+            i.type,
+            i.outDate,
+            p.id as pid,
+            p.name as pname
+            from income i left join project p on p.id = i.projectId
+        <where>
+            <if test="searchKey != null">
+                p.name like concat('%', #{searchKey}, '%') or p.code like concat('%', #{searchKey}, '%')
+            </if>
+        </where>
+        limit #{start}, #{count};
+    </select>
+
+    <select id="getIncome" parameterType="int" resultMap="incomeBean">
+        select
+        i.remark,
+        i.id,
+        i.account,
+        i.amount,
+        i.netAmount,
+        i.cost,
+        i.projectId,
+        i.type,
+        i.outDate,
+        p.id as pid,
+        p.name as pname
+        from income i left join project p on p.id = i.projectId where i.id = #{id};
+    </select>
+</mapper>

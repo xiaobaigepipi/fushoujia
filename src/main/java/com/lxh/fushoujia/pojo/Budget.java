@@ -32,6 +32,15 @@ public class Budget {
     private Date updateDate;
     private int projectId;
     private Project project;
+    private Boolean accounting;
+
+    public Boolean getAccounting() {
+        return accounting;
+    }
+
+    public void setAccounting(Boolean accounting) {
+        this.accounting = accounting;
+    }
 
     public int getId() {
         return id;

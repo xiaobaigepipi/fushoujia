@@ -28,7 +28,10 @@ public class ProjectStatus {
     public static final String payment = "payment"; //已收款
     public static final String noPayment = "noPayment"; //未收款
     public static final String finish = "finish"; //已完工
-    public static final String accept = "accept"; //已完工
-    public static final String noAccept = "noAccept"; //已完工
+    public static final String accept = "accept"; //已验收
+    public static final String noAccept = "noAccept"; //未验收
+
+    public static final String sale = "sale"; //销售
+    public static final String purchase = "purchase"; //采购
 
 }

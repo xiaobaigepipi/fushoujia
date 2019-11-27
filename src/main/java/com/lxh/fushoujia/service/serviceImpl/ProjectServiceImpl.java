@@ -86,4 +86,19 @@ public class ProjectServiceImpl implements ProjectService {
     public int deleteDocument(Integer id) {
         return projectMapper.deleteDocument(id);
     }
+
+    @Override
+    public List<Project> listAllProject() {
+        return projectMapper.listAllProject();
+    }
+
+    @Override
+    public List<Document> listDocumentByContract(Integer id) {
+        return projectMapper.listDocumentByContract(id);
+    }
+
+    @Override
+    public Document getDocument(Integer id) {
+        return projectMapper.getDocument(id);
+    }
 }

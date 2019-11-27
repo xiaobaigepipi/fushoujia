@@ -13,14 +13,18 @@ public interface ProjectService {
     List<Project> listProject(Map<String, Object> map);
     int updateProject(Project project);
     int getTotal(Map<String, Object> map);
-    Project getProject(@Param("id") Integer id);
+    Project getProject(Integer id);
     String getCode();
 
-    List<PaymentNode> listPaymentNode(@Param("projectId") Integer id);
+    List<PaymentNode> listPaymentNode(Integer id);
     int updatePaymentNode(PaymentNode paymentNode);
     int addPaymentNode(PaymentNode paymentNode);
 
     int addDocument(Document document);
-    List<Document> listDocumentByProject(@Param("projectId") Integer id);
-    int deleteDocument(@Param("id") Integer id);
+    List<Document> listDocumentByProject(Integer id);
+    int deleteDocument(Integer id);
+
+    List<Project> listAllProject();
+    List<Document> listDocumentByContract( Integer id);
+    Document getDocument(Integer id);
 }

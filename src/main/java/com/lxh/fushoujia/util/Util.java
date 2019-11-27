@@ -1,11 +1,13 @@
 package com.lxh.fushoujia.util;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
+import org.apache.commons.lang.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.*;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -115,4 +117,62 @@ public class Util {
         }
         return code;
     }
+
+    /**
+     * @param resp
+     * @param name         文件真实名字
+     * @param downloadName 文件下载时名字
+     */
+    public static File download(HttpServletResponse resp, String name, String downloadName, HttpServletRequest request) {
+        String fileName = null;
+        try {
+            fileName = new String(downloadName.getBytes("GBK"), "ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        ///home/tomcat/apache-tomcat-9.0.1/files
+        //String realPath = "D:\\web\\fushoujia\\src\\static\\img\\contract";
+        String realPath = request.getServletContext().getRealPath("/src/static/img/user");
+//        String realPath=File.separator+"home"+File.separator+"tomcat"+File.separator+"apache-tomcat-9.0.1"+File.separator+"files";
+        String path = realPath + File.separator + "24.png";
+        System.out.println(path);
+        File file = new File(path);
+        if (file.exists()) {
+            System.out.println("存在");
+        }
+        resp.reset();
+        String origin = request.getHeader("Origin");
+        if(StringUtils.isNotBlank(origin)) {
+            resp.setHeader("Access-Control-Allow-Origin", origin);
+        }
+        resp.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.setContentType("application/octet-stream");
+        resp.setCharacterEncoding("utf-8");
+        resp.setContentLength((int) file.length());
+        resp.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            os = resp.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(file));
+            int i = 0;
+            while ((i = bis.read(buff)) != -1) {
+                os.write(buff, 0, i);
+                os.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file;
+    }
+
 }

@@ -39,6 +39,8 @@ public class AllPublicController {
     CustomerService customerService;
     @Autowired
     SupplierService supplierService;
+    @Autowired
+    ProjectService projectService;
 
     /*
     * 获取未删除的部门信息
@@ -149,4 +151,13 @@ public class AllPublicController {
 
         return new Result("查询成功", "200", list);
     }
+
+    @RequestMapping(value = "/projects", method= RequestMethod.GET)
+    @ResponseBody
+    public Result listAllProjects() {
+        List<Project> list = projectService.listAllProject();
+
+        return new Result("查询成功", "200", list);
+    }
+
 }

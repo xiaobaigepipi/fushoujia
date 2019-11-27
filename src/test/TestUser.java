@@ -1,6 +1,7 @@
 import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.pojo.Page;
+import com.lxh.fushoujia.util.ProjectStatus;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,14 +42,31 @@ public class TestUser {
     FirstSendService firstSendService;
     @Autowired
     SecondSendService secondSendService;
+    @Autowired
+    ContractService contractService;
+    @Autowired
+    BillService billService;
+    @Autowired
+    IncomeService incomeService;
+    @Autowired
+    OutlayService outlayService;
 
     @Test
     public void testData() {
-        String filename = "hadka.jpg";
-        //获取文件后缀名
-        int index = StringUtils.indexOf(filename, '.');
-        String suffix = StringUtils.substring(filename, index+1);
-        System.out.println(suffix);
+        Page page = new Page();
+        page.setSearchKey(null);
+        page.setStart(0);
+        page.setCount(1);
+
+        Outlay i = new Outlay();
+        i.setAccount("account");
+        i.setAmount(new BigDecimal(64127));
+        i.setSunk(true);
+        i.setOutDate(new Date());
+        i.setProjectId(8);
+        i.setType("设计费");
+        i.setRemark("备注");
+        outlayService.addOutlay(i);
     }
 
 

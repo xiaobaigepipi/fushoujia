@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.OutlayMapper">
+    <resultMap id="outlayBean" type="Outlay">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="account" jdbcType="VARCHAR" property="account" />
+        <result column="amount" jdbcType="DECIMAL" property="amount" />
+        <result column="sunk" jdbcType="BOOLEAN" property="sunk" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="outDate" jdbcType="DATE" property="outDate" />
+
+        <association property="project" javaType="Project">
+            <id column="pid" jdbcType="INTEGER" property="id" />
+            <result column="pname" jdbcType="VARCHAR" property="name" />
+        </association>
+    </resultMap>
+
+    <insert id="addOutlay" parameterType="Outlay" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        insert into outlay (remark, account, amount, sunk, projectId, type, outDate, createDate, updateDate) values (#{remark}, #{account}, #{amount}, #{sunk}, #{projectId}, #{type}, #{outDate}, now(), now());
+    </insert>
+
+    <delete id="deleteOutlay" parameterType="int">
+        delete from outlay where id = #{id};
+    </delete>
+
+    <update id="updateOutlay" parameterType="Outlay">
+        update outlay
+        <set>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="account != null">
+                account = #{account},
+            </if>
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+            <if test="sunk != false">
+                sunk = #{sunk},
+            </if>
+            <if test="projectId != null">
+                projectId = #{projectId},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="outDate != null">
+                outDate = #{outDate},
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="listOutlay" parameterType="java.util.Map" resultMap="outlayBean">
+        select
+        i.remark,
+        i.id,
+        i.account,
+        i.amount,
+        i.sunk,
+        i.projectId,
+        i.type,
+        i.outDate,
+        p.id as pid,
+        p.name as pname
+        from Outlay i left join project p on p.id = i.projectId
+        <where>
+            <if test="searchKey != null">
+                p.name like concat('%', #{searchKey}, '%') or p.code like concat('%', #{searchKey}, '%')
+            </if>
+            i.sunk = #{sunk}
+        </where>
+        limit #{start}, #{count};
+    </select>
+
+    <select id="getOutlay" parameterType="int" resultMap="outlayBean">
+        select
+        i.remark,
+        i.id,
+        i.account,
+        i.amount,
+        i.sunk,
+        i.projectId,
+        i.type,
+        i.outDate,
+        p.id as pid,
+        p.name as pname
+        from outlay i left join project p on p.id = i.projectId where i.id = #{id};
+    </select>
+</mapper>

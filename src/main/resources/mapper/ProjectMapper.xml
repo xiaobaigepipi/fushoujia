@@ -9,6 +9,9 @@
             (#{name}, #{code}, #{type}, #{property}, #{projectDate}, #{origin}, #{client}, #{province}, #{city}, #{workPlace}, #{buildArea}, #{landArea}, #{subject}, #{principal}, #{tenderType}, #{supplier}, #{description}, #{startDate}, #{endDate}, #{cycle}, #{status}, #{contract}, now(), now(), #{userId}, #{payment}, #{departments});
     </insert>
 
+    <select id="listAllProject" resultType="Project">
+        select * from project where isDelete = false;
+    </select>
     <select id="listProject" parameterType="java.util.Map" resultType="Project">
         select * from project
         <where>
@@ -170,7 +173,7 @@
     </select>
 
     <insert id="addDocument" keyColumn="id" useGeneratedKeys="true" keyProperty="id" parameterType="Document">
-        insert into document (name, url, createDate, updateDate, projectId) values (#{name}, #{url}, now(), now(), #{projectId});
+        insert into document (name, url, createDate, updateDate, projectId, type, contractId) values (#{name}, #{url}, now(), now(), #{projectId}, #{type}, #{contractId});
     </insert>
 
     <select id="listDocumentByProject" parameterType="int" resultType="Document">
@@ -180,4 +183,12 @@
     <delete id="deleteDocument" parameterType="int">
         delete from document where id = #{id};
     </delete>
+
+    <select id="listDocumentByContract" parameterType="int" resultType="Document">
+        select * from document where contractId = #{contractId} order by id asc;
+    </select>
+
+    <select id="getDocument" parameterType="int" resultType="Document">
+        select * from document where id = #{id};
+    </select>
 </mapper>

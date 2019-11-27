@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lxh.fushoujia.mapper.BillMapper">
+    <select id="listBill" resultType="Bill" parameterType="Page">
+        select * from bill b left join project p on p.id = b.projectId
+        <where>
+            <if test="searchKey != null">
+                p.name like concat('%', #{searchKey}, '%') or p.code like concat('%', #{searchKey}, '%')
+            </if>
+        </where>
+        limit #{start}, #{count};
+    </select>
+
+    <select id="getBill" resultType="Bill" parameterType="int">
+        select * from bill  where id = #{id};
+    </select>
+
+    <select id="listBillByStatus" resultType="Bill" parameterType="String">
+        select * from bill  where status = #{status};
+    </select>
+
+    <insert id="addBill" parameterType="Bill" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        insert into bill (other, invoice, createDate, updateDate, taxNumber, bank, projectId, applicant, applyDate, allIncome, allBill, thisBill, billCompany, contact, address, phone, postNumber, postCompany, status) values (#{other}, #{invoice}, now(), now(), #{taxNumber}, #{bank}, #{projectId}, #{applicant}, #{applyDate}, #{allIncome}, #{allBill}, #{thisBill}, #{billCompany}, #{contact}, #{address}, #{phone}, #{postNumber}, #{postCompany}, #{status});
+    </insert>
+    
+    <delete id="deleteBill" parameterType="int">
+      delete from bill where id = #{id};
+    </delete>
+
+    <update id="updateBill" parameterType="Bill">
+        update bill
+        <set>
+            <if test="other != null ">
+                other = #{other},
+            </if>
+            <if test="invoice != null ">
+                invoice = #{invoice},
+            </if>
+            <if test="taxNumber != null ">
+                taxNumber = #{taxNumber},
+            </if>
+            <if test="bank != null ">
+                bank = #{bank},
+            </if>
+            <if test="projectId != null ">
+                projectId = #{projectId},
+            </if>
+            <if test="applicant != null ">
+                applicant = #{applicant},
+            </if>
+            <if test="applyDate != null ">
+                applyDate = #{applyDate},
+            </if>
+            <if test="allIncome != null ">
+                allIncome = #{allIncome},
+            </if>
+            <if test="allBill != null ">
+                allBill = #{allBill},
+            </if>
+            <if test="thisBill != null ">
+                thisBill = #{thisBill},
+            </if>
+            <if test="billCompany != null ">
+                billCompany = #{billCompany},
+            </if>
+            <if test="contact != null ">
+                contact = #{contact},
+            </if>
+            <if test="address != null ">
+                address = #{address},
+            </if>
+            <if test="phone != null ">
+                phone = #{phone},
+            </if>
+            <if test="postNumber != null ">
+                postNumber = #{postNumber},
+            </if>
+            <if test="postCompany != null ">
+                postCompany = #{postCompany},
+            </if>
+            <if test="status != null ">
+                status = #{status},
+            </if>
+            updateDate = now()
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

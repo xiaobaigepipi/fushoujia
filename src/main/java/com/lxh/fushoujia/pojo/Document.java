@@ -17,6 +17,26 @@ public class Document {
     private Date createDate;
     private Date updateDate;
 
+    private String type;
+
+    private int contractId;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(int contractId) {
+        this.contractId = contractId;
+    }
+
     public int getId() {
         return id;
     }

@@ -323,6 +323,7 @@ public class ProjectController {
             String newFilename = times + "" + random + "." + suffix;
 
             Document document = new Document();
+            document.setType(suffix);
             document.setName(filename);
             document.setUrl("/src/static/img/project/" + newFilename);
             document.setProjectId(projectId);
