@@ -3,6 +3,7 @@ package com.lxh.fushoujia.service;
 import com.lxh.fushoujia.pojo.Outlay;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -12,4 +13,6 @@ public interface OutlayService {
     int addOutlay(Outlay outlay);
     int deleteOutlay(@Param("id") int id);
     int updateOutlay(Outlay outlay);
+
+    BigDecimal getSunk();
 }

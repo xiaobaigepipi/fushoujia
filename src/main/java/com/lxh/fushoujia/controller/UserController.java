@@ -1,9 +1,8 @@
 package com.lxh.fushoujia.controller;
 
-import com.lxh.fushoujia.pojo.Role;
-import com.lxh.fushoujia.pojo.User;
+import com.lxh.fushoujia.pojo.*;
+import com.lxh.fushoujia.service.BasicService;
 import com.lxh.fushoujia.service.UserService;
-import com.lxh.fushoujia.pojo.Page;
 import com.lxh.fushoujia.util.Util;
 import com.lxh.fushoujia.util.JwtUtil;
 import com.lxh.fushoujia.util.Result;
@@ -38,6 +37,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    BasicService basicService;
+
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ResponseBody
     public User listUser(HttpServletRequest request) {
@@ -48,7 +50,10 @@ public class UserController {
         int id = JwtUtil.getUserId(token);
         //System.out.println(id);
         User user = userService.getUser(id);
-
+        Position p = basicService.getPosition(user.getPositionId());
+        Department d = basicService.getDepartment(user.getDepartmentId());
+        user.setPosition(p);
+        user.setDepartment(d);
         //System.out.println(user.getHeadImage());
         return user;
     }

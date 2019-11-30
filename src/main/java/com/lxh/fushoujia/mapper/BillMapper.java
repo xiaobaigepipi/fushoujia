@@ -13,4 +13,6 @@ public interface BillMapper {
     int addBill(Bill bill);
     int deleteBill(@Param("id") int id);
     int updateBill(Bill bill);
+
+    Integer getAllBill(@Param("projectId") int id);
 }

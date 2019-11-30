@@ -17,8 +17,8 @@ public class ProjectStatus {
     public static final String review = "review"; //已审核
     public static final String approval = "approval"; //已审批
     public static final String invalid = "invalid"; //已作废//
-    public static final String noInvalid = "noInvalid"; //待作废//
-    public static final String toInvalid = "invalid"; //取消作废//
+    public static final String noInvalid = "noInvalid"; //取消作废//
+    public static final String toInvalid = "invalid"; //待作废//
 
     public static final String noReview = "noReview"; //审核未通过
     public static final String noApproval = "noApproval"; //审批未通过

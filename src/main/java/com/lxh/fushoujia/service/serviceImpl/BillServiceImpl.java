@@ -53,4 +53,13 @@ public class BillServiceImpl implements BillService {
     public int updateBill(Bill bill) {
         return billMapper.updateBill(bill);
     }
+
+    @Override
+    public Integer getAllBill(int id) {
+        Integer i = billMapper.getAllBill(id);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
 }

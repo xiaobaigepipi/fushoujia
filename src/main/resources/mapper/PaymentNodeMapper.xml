@@ -5,6 +5,11 @@
     <select id="listPaymentNode" parameterType="int" resultType="PaymentNode">
         select * from payment_node where projectId = #{projectId} order by paymentTime asc;
     </select>
+
+    <select id="listPaymentNodeByTime" parameterType="Date" resultType="PaymentNode">
+        select * from payment_node where paymentTime &lt;= #{paymentTime} and status != 'payment' order by paymentTime desc ;
+    </select>
+
     <update id="updatePaymentNode" parameterType="PaymentNode" >
         update payment_node
         <set>

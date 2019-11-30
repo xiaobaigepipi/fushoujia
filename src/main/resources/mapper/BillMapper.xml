@@ -6,7 +6,7 @@
         select * from bill b left join project p on p.id = b.projectId
         <where>
             <if test="searchKey != null">
-                p.name like concat('%', #{searchKey}, '%') or p.code like concat('%', #{searchKey}, '%')
+                p.name like concat('%', #{searchKey}, '%') or p.client like concat('%', #{searchKey}, '%')
             </if>
         </where>
         limit #{start}, #{count};
@@ -21,7 +21,7 @@
     </select>
 
     <insert id="addBill" parameterType="Bill" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
-        insert into bill (other, invoice, createDate, updateDate, taxNumber, bank, projectId, applicant, applyDate, allIncome, allBill, thisBill, billCompany, contact, address, phone, postNumber, postCompany, status) values (#{other}, #{invoice}, now(), now(), #{taxNumber}, #{bank}, #{projectId}, #{applicant}, #{applyDate}, #{allIncome}, #{allBill}, #{thisBill}, #{billCompany}, #{contact}, #{address}, #{phone}, #{postNumber}, #{postCompany}, #{status});
+        insert into bill (other, invoice, createDate, updateDate, taxNumber, bank, projectId, applicant, applyDate, allIncome, allBill, thisBill, billCompany, contact, address, phone, postNumber, postCompany, status, invoiceType, addressPhone, principal) values (#{other}, #{invoice}, now(), now(), #{taxNumber}, #{bank}, #{projectId}, #{applicant}, #{applyDate}, #{allIncome}, #{allBill}, #{thisBill}, #{billCompany}, #{contact}, #{address}, #{phone}, #{postNumber}, #{postCompany}, #{status}, #{invoiceType}, #{addressPhone}, #{principal});
     </insert>
     
     <delete id="deleteBill" parameterType="int">
@@ -82,8 +82,18 @@
             <if test="status != null ">
                 status = #{status},
             </if>
+            <if test="invoiceType != null ">
+                invoiceType = #{invoiceType},
+            </if>
+            <if test="addressPhone != null ">
+                addressPhone = #{addressPhone},
+            </if>
             updateDate = now()
         </set>
         where id = #{id}
     </update>
+
+    <select id="getAllBill" resultType="int" parameterType="Integer">
+        select sum(thisBill) from bill where projectId = #{projectId};
+    </select>
 </mapper>

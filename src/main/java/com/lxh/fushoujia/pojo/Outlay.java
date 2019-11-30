@@ -1,5 +1,7 @@
 package com.lxh.fushoujia.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -20,6 +22,8 @@ public class Outlay {
     private boolean sunk;
     private int projectId;
     private String type;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date outDate;
     private Project project;
 

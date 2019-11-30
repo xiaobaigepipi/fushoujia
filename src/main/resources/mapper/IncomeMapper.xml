@@ -97,4 +97,12 @@
         p.name as pname
         from income i left join project p on p.id = i.projectId where i.id = #{id};
     </select>
+
+    <select id="getAllIncome" parameterType="int" resultType="Integer">
+       select sum(netAmount) from income where projectId = #{projectId}
+    </select>
+
+    <select id="getAll" resultType="BigDecimal">
+        select sum(netAmount) from income;
+    </select>
 </mapper>

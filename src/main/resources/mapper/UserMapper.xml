@@ -81,6 +81,23 @@
 
     </select>
 
+    <select id="getUserAction" resultMap="projectUser" parameterType="int">
+        select
+              u.id as id,
+              u.name as name,
+              u.email as email,
+              ur.id as urid,
+              r.id as rid,
+              r.name as rname,
+              ra.id as raid,
+              a.id as aid,
+              a.name as aname,
+              a.code as acode,
+              a.url as aurl
+        from user u left join user_role ur on u.id = ur.userId left join role r on r.id = ur.roleId left join role_action ra on ra.roleId = r.id left join action a on a.id = ra.actionId where u.id = #{id};
+
+    </select>
+
     <select id="getTotal" resultType="int" parameterType="Page">
         select count(*) from user
         <where>
@@ -176,5 +193,13 @@
     <delete id="deleteUserRoles" parameterType="int">
         delete from user_role where userId = #{id}
     </delete>
+
+    <insert id="addDynamic" parameterType="Dynamic" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        insert into dynamic (name, userId, url, createDate) values (#{name}, #{userId}, #{url}, now());
+    </insert>
+
+    <select id="listDynamic" parameterType="java.util.Map" resultType="Dynamic">
+        select * from dynamic where userId = #{userId} order by  createDate desc limit #{start}, #{count};
+    </select>
 
 </mapper>

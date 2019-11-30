@@ -61,4 +61,14 @@ public class BudgetServiceImpl implements BudgetService {
     public int updateBudgetRemark(BudgetRemark budgetRemark) {
         return budgetMapper.updateBudgetRemark(budgetRemark);
     }
+
+    @Override
+    public Budget getBudgetByTrue(Integer id) {
+        return budgetMapper.getBudgetByTrue(id);
+    }
+
+    @Override
+    public List<Budget> listBudgetByApproval() {
+        return budgetMapper.listBudgetByApproval();
+    }
 }

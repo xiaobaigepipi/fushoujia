@@ -2,6 +2,7 @@ package com.lxh.fushoujia.service.serviceImpl;
 
 import com.lxh.fushoujia.mapper.BasicMapper;
 import com.lxh.fushoujia.mapper.UserMapper;
+import com.lxh.fushoujia.pojo.Dynamic;
 import com.lxh.fushoujia.pojo.Page;
 import com.lxh.fushoujia.pojo.Role;
 import com.lxh.fushoujia.pojo.User;
@@ -102,5 +103,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> listAllUser() {
         return userMapper.listAllUser();
+    }
+
+    @Override
+    public User getUserAction(Integer id) {
+        return userMapper.getUserAction(id);
+    }
+
+    @Override
+    public List<Dynamic> listDynamic(Map<String, Object> map) {
+        return userMapper.listDynamic(map);
+    }
+
+    @Override
+    public int addDynamic(Dynamic dynamic) {
+        return userMapper.addDynamic(dynamic);
     }
 }

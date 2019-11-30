@@ -7,6 +7,14 @@
         select * from second_send where firstId = #{firstId} and isDelete = false order by id asc ;
     </select>
 
+    <select id="listSecondSendByApproval" resultType="SecondSend" parameterType="int">
+        select * from second_send s left join first_send f on f.id = s.firstId where f.departmentId = #{id} and s.status = 'toApproval';
+    </select>
+
+    <select id="listSecondSendByInvalid" resultType="SecondSend" parameterType="int">
+        select * from second_send s left join first_send f on f.id = s.firstId left join project p on f.projectId = p.id where p.userId = #{id} and s.status = 'toInvalid';
+    </select>
+
     <select id="listSecondSendByUser" resultType="SecondSend" parameterType="java.util.Map">
         select * from second_send
         <where>

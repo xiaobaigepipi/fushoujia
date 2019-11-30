@@ -5,10 +5,7 @@ import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.BudgetService;
 import com.lxh.fushoujia.service.FirstSendService;
 import com.lxh.fushoujia.service.ProjectService;
-import com.lxh.fushoujia.util.ChineseUtil;
-import com.lxh.fushoujia.util.ProjectStatus;
-import com.lxh.fushoujia.util.Result;
-import com.lxh.fushoujia.util.Util;
+import com.lxh.fushoujia.util.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,10 +37,51 @@ public class ProjectController {
     FirstSendService firstSendService;
 
 
+    @RequestMapping(value = "/project/work/project", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listProject() {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("year", 0);
+        map.put("month", 0);
+
+
+        map.put("start", 0);
+        map.put("count", Integer.MAX_VALUE);
+        map.put("status","toApproval");
+        //int total = projectService.getTotal(map);
+
+        List<Project> list = projectService.listProject(map);
+        return new Result("查询成功", "200", list);
+    }
+
+
+    @RequestMapping(value = "/project/work/contract", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listProject(HttpServletRequest request, String status, String contract) {
+        String token = request.getHeader("token");
+        int id = JwtUtil.getUserId(token);
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("year", 0);
+        map.put("month", 0);
+
+
+        map.put("start", 0);
+        map.put("count", Integer.MAX_VALUE);
+        map.put("contract", contract);
+        map.put("userId", id);
+        map.put("status", status);
+        //int total = projectService.getTotal(map);
+
+        List<Project> list = projectService.listProject(map);
+        return new Result("查询成功", "200", list);
+    }
+
     @RequestMapping(value = "/project", method = RequestMethod.GET)
     @ResponseBody
     public Result listProject(Project project, @RequestParam("start")Integer start, @RequestParam("count")Integer count, @RequestParam("year") String year, @RequestParam("month") String month, @RequestParam("date") String date) {
-        System.out.println(month);
+        //System.out.println(month);
         Map<String, Object> map = new HashMap<>();
         if (year == null || year.length() == 0) {
             map.put("year", 0);
@@ -200,6 +238,13 @@ public class ProjectController {
     @ResponseBody
     public Result getBudget(@RequestParam("projectId") Integer projectId) {
         Budget b = budgetService.getBudget(projectId);
+        return new Result("新增成功", "200", b);
+    }
+
+    @RequestMapping(value = "/project/budget/account", method = RequestMethod.GET)
+    @ResponseBody
+    public Result getBudgetByTrue(@RequestParam("projectId") Integer projectId) {
+        Budget b = budgetService.getBudgetByTrue(projectId);
         return new Result("新增成功", "200", b);
     }
 

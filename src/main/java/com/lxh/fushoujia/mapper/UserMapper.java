@@ -1,5 +1,6 @@
 package com.lxh.fushoujia.mapper;
 
+import com.lxh.fushoujia.pojo.Dynamic;
 import com.lxh.fushoujia.pojo.Page;
 import com.lxh.fushoujia.pojo.Role;
 import com.lxh.fushoujia.pojo.User;
@@ -33,4 +34,9 @@ public interface UserMapper {
     void deleteUserRoles(@Param("id") int id);
     List<User> listUserAction();
     List<User> listAllUser();
+
+    User getUserAction(Integer id);
+
+    List<Dynamic> listDynamic(Map<String, Object> map);
+    int addDynamic(Dynamic dynamic);
 }

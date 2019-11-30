@@ -13,4 +13,6 @@ public interface BillService {
     int addBill(Bill bill);
     int deleteBill(@Param("id") int id);
     int updateBill(Bill bill);
+
+    Integer getAllBill(int id);
 }

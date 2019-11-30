@@ -10,7 +10,7 @@
     </insert>
 
     <select id="listAllProject" resultType="Project">
-        select * from project where isDelete = false;
+        select * from project where isDelete = false and status = 'approval';
     </select>
     <select id="listProject" parameterType="java.util.Map" resultType="Project">
         select * from project
@@ -39,6 +39,12 @@
             </if>
             <if test="userId != null">
                 and userId = #{userId}
+            </if>
+            <if test="contract != null">
+                and contract = #{contract}
+            </if>
+            <if test="status != null">
+                and status = #{status}
             </if>
         </where>
         limit #{start}, #{count};

@@ -16,4 +16,7 @@ public interface BudgetService {
     BudgetRemark getBudgetRemark(@Param("budgetId") Integer budgetId);
     int updateBudget(Budget budget);
     int updateBudgetRemark(BudgetRemark budgetRemark);
+
+    Budget getBudgetByTrue(Integer id);
+    List<Budget> listBudgetByApproval();
 }

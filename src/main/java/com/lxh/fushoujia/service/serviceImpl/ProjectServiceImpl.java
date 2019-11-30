@@ -9,6 +9,7 @@ import com.lxh.fushoujia.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -100,5 +101,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Document getDocument(Integer id) {
         return projectMapper.getDocument(id);
+    }
+
+    @Override
+    public List<PaymentNode> listPaymentNodeByTime(Date date) {
+        return paymentNodeMapper.listPaymentNodeByTime(date);
     }
 }

@@ -28,6 +28,27 @@
         </association>
     </resultMap>
 
+    <select id="listFirstSendByApproval" resultMap="firstSendBean" parameterType="int">
+        select
+            f.process,
+            f.id,
+            f.type,
+            f.supplier,
+            f.sendTime,
+            f.endTime,
+            f.cycle,
+            f.remark,
+            f.status,
+            f.special,
+            f.projectId,
+            f.departmentId,
+            d.id as did,
+            d.name,
+            d.director,
+            p.id as pid,
+            p.name as pname
+        from first_send f left join department d on d.id = f.departmentId  left join project p on p.id = f.projectId where p.userId = #{userId} and f.isDelete = false and f.status = 'toApproval'  order by id asc;
+    </select>
 
     <select id="listFirstSend" resultMap="firstSendBean" parameterType="int">
         select

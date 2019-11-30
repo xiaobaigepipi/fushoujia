@@ -2,6 +2,7 @@ import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.pojo.Page;
 import com.lxh.fushoujia.util.ProjectStatus;
+import com.lxh.fushoujia.util.Util;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.ws.rs.PUT;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -50,23 +52,24 @@ public class TestUser {
     IncomeService incomeService;
     @Autowired
     OutlayService outlayService;
+    @Autowired
+    ProjectService projectService;
 
     @Test
     public void testData() {
-        Page page = new Page();
-        page.setSearchKey(null);
-        page.setStart(0);
-        page.setCount(1);
+        Map<String, Object> map = new HashMap<>();
 
-        Outlay i = new Outlay();
-        i.setAccount("account");
-        i.setAmount(new BigDecimal(64127));
-        i.setSunk(true);
-        i.setOutDate(new Date());
-        i.setProjectId(8);
-        i.setType("设计费");
-        i.setRemark("备注");
-        outlayService.addOutlay(i);
+        map.put("year", 0);
+        map.put("month", 0);
+
+
+        map.put("start", 0);
+        map.put("count", Integer.MAX_VALUE);
+        map.put("contract", "noContract");
+
+        //int total = projectService.getTotal(map);
+
+        List<Project> list = projectService.listProject(map);
     }
 
 

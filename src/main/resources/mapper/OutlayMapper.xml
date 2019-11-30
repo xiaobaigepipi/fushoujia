@@ -72,7 +72,7 @@
             <if test="searchKey != null">
                 p.name like concat('%', #{searchKey}, '%') or p.code like concat('%', #{searchKey}, '%')
             </if>
-            i.sunk = #{sunk}
+             and i.sunk = #{sunk}
         </where>
         limit #{start}, #{count};
     </select>
@@ -90,5 +90,11 @@
         p.id as pid,
         p.name as pname
         from outlay i left join project p on p.id = i.projectId where i.id = #{id};
+    </select>
+
+    <select id="getSunk" resultType="BigDecimal">
+        select
+        sum(amount)
+        from outlay  where sunk = true;
     </select>
 </mapper>

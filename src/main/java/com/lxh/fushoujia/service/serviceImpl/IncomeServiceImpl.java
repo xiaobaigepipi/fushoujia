@@ -7,6 +7,7 @@ import com.lxh.fushoujia.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /*
@@ -44,5 +45,23 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public int updateIncome(Income income) {
         return incomeMapper.updateIncome(income);
+    }
+
+    @Override
+    public Integer getAllIncome(int id) {
+        Integer i = incomeMapper.getAllIncome(id);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    @Override
+    public BigDecimal getAll() {
+        BigDecimal b = incomeMapper.getAll();
+        if (b == null) {
+            return new BigDecimal(0);
+        }
+        return b;
     }
 }

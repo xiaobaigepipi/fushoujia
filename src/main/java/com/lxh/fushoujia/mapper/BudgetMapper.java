@@ -16,4 +16,7 @@ public interface BudgetMapper {
     BudgetRemark getBudgetRemark(@Param("budgetId") Integer budgetId);
     int updateBudget(Budget budget);
     int updateBudgetRemark(BudgetRemark budgetRemark);
+
+    Budget getBudgetByTrue(@Param("id") Integer id);
+    List<Budget> listBudgetByApproval();
 }

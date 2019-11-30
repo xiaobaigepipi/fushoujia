@@ -1,5 +1,6 @@
 package com.lxh.fushoujia.util;
 
+import com.lxh.fushoujia.pojo.Dynamic;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.apache.commons.lang.StringUtils;
 
@@ -175,4 +176,20 @@ public class Util {
         return file;
     }
 
+    /*
+     * @Author 辉
+     * @Description //TODO
+     * @Date 23:24 2019/11/29
+     * @Param [request, name, url]
+     * @return com.lxh.fushoujia.pojo.Dynamic
+     **/
+    public static Dynamic getDynamic(HttpServletRequest request, String name, String url) {
+        String token = request.getHeader("token");
+        int userId = JwtUtil.getUserId(token);
+        Dynamic d = new Dynamic();
+        d.setUserId(userId);
+        d.setName(name);
+        d.setUrl(url);
+        return d;
+    }
 }

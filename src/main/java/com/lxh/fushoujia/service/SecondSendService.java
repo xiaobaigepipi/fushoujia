@@ -12,4 +12,6 @@ public interface SecondSendService {
     int updateSecondSend(SecondSend s);
     SecondSend getSecondSend(@Param("id") int id);
     List<SecondSend> listSecondSendByUser(Map<String, Object> map);
+    List<SecondSend> listSecondSendByApproval(Integer id);
+    List<SecondSend> listSecondSendByInvalid(Integer id);
 }

@@ -1,5 +1,7 @@
 package com.lxh.fushoujia.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -20,6 +22,8 @@ public class Bill {
     private String bank;
     private int projectId;
     private String applicant;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date applyDate;
     private BigDecimal allIncome;
     private BigDecimal allBill;
@@ -31,6 +35,43 @@ public class Bill {
     private String postNumber;
     private String postCompany;
     private String status;
+
+    private Project project;
+    private String invoiceType;
+    private String addressPhone;
+    private String principal;
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getAddressPhone() {
+        return addressPhone;
+    }
+
+    public void setAddressPhone(String addressPhone) {
+        this.addressPhone = addressPhone;
+    }
+
+    public String getInvoiceType() {
+        return invoiceType;
+    }
+
+    public void setInvoiceType(String invoiceType) {
+        this.invoiceType = invoiceType;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public int getId() {
         return id;

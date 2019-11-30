@@ -6,6 +6,7 @@ import com.lxh.fushoujia.service.OutlayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -44,5 +45,14 @@ public class OutlayServiceImpl implements OutlayService {
     @Override
     public int updateOutlay(Outlay outlay) {
         return outlayMapper.updateOutlay(outlay);
+    }
+
+    @Override
+    public BigDecimal getSunk() {
+        BigDecimal i = outlayMapper.getSunk();
+        if (i == null) {
+            return new BigDecimal(0);
+        }
+        return i;
     }
 }

@@ -33,6 +33,15 @@ public class Budget {
     private int projectId;
     private Project project;
     private Boolean accounting;
+    private BigDecimal sunk;
+
+    public BigDecimal getSunk() {
+        return sunk;
+    }
+
+    public void setSunk(BigDecimal sunk) {
+        this.sunk = sunk;
+    }
 
     public Boolean getAccounting() {
         return accounting;

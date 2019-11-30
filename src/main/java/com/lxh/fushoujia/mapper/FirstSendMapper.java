@@ -19,4 +19,5 @@ public interface FirstSendMapper {
     FirstSend getFirstSend(@Param("id") Integer id);
     int updateFirstSend(FirstSend firstSend);
     List<FirstSend> listFirstSendByDepart(Map<String, Object> map);
+    List<FirstSend> listFirstSendByApproval(@Param("userId") Integer id);
 }

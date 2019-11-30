@@ -5,6 +5,7 @@ import com.lxh.fushoujia.pojo.PaymentNode;
 import com.lxh.fushoujia.pojo.Project;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ public interface ProjectService {
     List<PaymentNode> listPaymentNode(Integer id);
     int updatePaymentNode(PaymentNode paymentNode);
     int addPaymentNode(PaymentNode paymentNode);
+    List<PaymentNode> listPaymentNodeByTime(Date date);
 
     int addDocument(Document document);
     List<Document> listDocumentByProject(Integer id);

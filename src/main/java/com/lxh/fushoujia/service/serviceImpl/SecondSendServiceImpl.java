@@ -45,4 +45,14 @@ public class SecondSendServiceImpl implements SecondSendService {
     public List<SecondSend> listSecondSendByUser(Map<String, Object> map) {
         return secondSendMapper.listSecondSendByUser(map);
     }
+
+    @Override
+    public List<SecondSend> listSecondSendByApproval(Integer id) {
+        return secondSendMapper.listSecondSendByApproval(id);
+    }
+
+    @Override
+    public List<SecondSend> listSecondSendByInvalid(Integer id) {
+        return secondSendMapper.listSecondSendByInvalid(id);
+    }
 }

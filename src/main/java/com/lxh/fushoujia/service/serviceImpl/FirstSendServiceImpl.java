@@ -44,4 +44,9 @@ public class FirstSendServiceImpl implements FirstSendService {
     public List<FirstSend> listFirstSendByDepart(Map<String, Object> map) {
         return firstSendMapper.listFirstSendByDepart(map);
     }
+
+    @Override
+    public List<FirstSend> listFirstSendByApproval(Integer id) {
+        return firstSendMapper.listFirstSendByApproval(id);
+    }
 }

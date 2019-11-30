@@ -10,6 +10,7 @@
         <result column="grossProfit" jdbcType="DECIMAL" property="grossProfit" />
         <result column="netProfit" jdbcType="DECIMAL" property="netProfit" />
         <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="accounting" jdbcType="BOOLEAN" property="accounting" />
 
         <association property="project" javaType="Project">
             <id column="pid" jdbcType="INTEGER" property="id" />
@@ -17,6 +18,22 @@
             <id column="client" jdbcType="VARCHAR" property="client" />
         </association>
     </resultMap>
+
+    <select id="listBudgetByApproval" resultMap="projectBudget">
+        select
+        b.id as id,
+        b.expectedIncome,
+        b.tenderCost,
+        b.grossProfit,
+        b.netProfit,
+        b.status,
+        p.id as pid,
+        p.name,
+        p.client,
+        b.accounting
+        from budget b left join project p on b.projectId = p.id
+        where b.status = 'toReview' and p.status != 'invalid' and p.isDelete = false;
+    </select>
 
     <select id="listBudget" resultMap="projectBudget" parameterType="Page">
         select
@@ -28,7 +45,8 @@
               b.status,
               p.id as pid,
               p.name,
-              p.client
+              p.client,
+              b.accounting
         from budget b left join project p on b.projectId = p.id
         <where>
             <if test=" searchKey != null">
@@ -52,7 +70,11 @@
     </select>
 
     <select id="getBudget" resultType="Budget" parameterType="int">
-        select * from budget where projectId = #{id}
+        select * from budget where projectId = #{id} and accounting != true;
+    </select>
+
+    <select id="getBudgetByTrue" resultType="Budget" parameterType="int">
+        select * from budget where projectId = #{id} and accounting = true;
     </select>
 
     <select id="getBudgetRemark" resultType="BudgetRemark" parameterType="int">
@@ -61,8 +83,8 @@
 
     <insert id="addBudget" parameterType="Budget" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
         insert into budget
-            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, vat, grossProfit, incomeTax, netProfit, taxRate, status, createDate, updateDate, projectId, accounting)
-            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{vat}, #{grossProfit}, #{incomeTax}, #{netProfit}, #{taxRate}, #{status}, now(), now(), #{projectId}, #{accounting});
+            (expectedIncome, tenderCost, netIncome, outCost, publicCost, humanCost, serveCost, travelCost, otherCost, allCost, vat, grossProfit, incomeTax, netProfit, taxRate, status, createDate, updateDate, projectId, accounting, sunk)
+            values (#{expectedIncome}, #{tenderCost}, #{netIncome}, #{outCost}, #{publicCost}, #{humanCost}, #{serveCost}, #{travelCost}, #{otherCost}, #{allCost}, #{vat}, #{grossProfit}, #{incomeTax}, #{netProfit}, #{taxRate}, #{status}, now(), now(), #{projectId}, #{accounting}, #{sunk});
     </insert>
 
     <insert id="addBudgetRemark" parameterType="BudgetRemark" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
