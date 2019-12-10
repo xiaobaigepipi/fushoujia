@@ -1,6 +1,7 @@
 import com.lxh.fushoujia.pojo.*;
 import com.lxh.fushoujia.service.*;
 import com.lxh.fushoujia.pojo.Page;
+import com.lxh.fushoujia.util.PDFUtil;
 import com.lxh.fushoujia.util.ProjectStatus;
 import com.lxh.fushoujia.util.Util;
 import org.apache.commons.lang.StringUtils;
@@ -57,19 +58,10 @@ public class TestUser {
 
     @Test
     public void testData() {
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("year", 0);
-        map.put("month", 0);
-
-
-        map.put("start", 0);
-        map.put("count", Integer.MAX_VALUE);
-        map.put("contract", "noContract");
-
-        //int total = projectService.getTotal(map);
-
-        List<Project> list = projectService.listProject(map);
+        Project project = projectService.getProject(8);
+        PDFUtil pdf = new PDFUtil();
+        pdf.generatePDF(project);
+        System.out.println("生成PDF成功311322222");
     }
 
 
