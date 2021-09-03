@@ -26,6 +26,7 @@ public class User {
     private Department department;
     private Position position;
     private List<Role> roles;
+    private String url;
 
     public List<Role> getRoles() {
         return roles;
@@ -145,5 +146,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

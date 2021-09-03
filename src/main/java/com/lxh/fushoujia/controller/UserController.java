@@ -6,6 +6,7 @@ import com.lxh.fushoujia.service.UserService;
 import com.lxh.fushoujia.util.Util;
 import com.lxh.fushoujia.util.JwtUtil;
 import com.lxh.fushoujia.util.Result;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @program: fushoujia
@@ -138,8 +136,19 @@ public class UserController {
      * */
     @RequestMapping(value = "/adduser/users", method = RequestMethod.POST)
     @ResponseBody
-    public Result addUser(User user, MultipartFile file, HttpServletRequest request) {
+    public Result addUser(User user, @RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request) {
+        String newFilename = "123.jpg";
         if (file != null) {
+            //获取原文件名
+            String filename = file.getOriginalFilename();
+            //获取文件后缀名
+            int index = StringUtils.indexOf(filename, '.');
+            //生成新的文件名
+            long times = new Date().getTime();
+            int random = Math.round((float)Math.random() * 10000);
+            //System.out.println(random);
+            newFilename = times + "" + random + ".jpg";
+            user.setUrl("http://127.0.0.1:8080/uploadFiles/user/" + newFilename);
             user.setHeadImage(true);
         } else {
             user.setHeadImage(false);
@@ -160,18 +169,17 @@ public class UserController {
             //System.out.println(path);
 
             //获取原文件名
-            String filename = file.getOriginalFilename();
+            //String filename = file.getOriginalFilename();
             //System.out.println(filename);
 
             //
-            File f = new File(path, userId+ ".jpg");
+            //File f = new File(path, newFilename);
             //前端显示的文件，在开发环境中有
             //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\user";
-            File newfile = new File(path, userId + ".jpg" );
-            System.out.println(f.getAbsolutePath());
+            File newfile = new File(path, newFilename);
             //判断文件夹是否存在
-            if (!f.getParentFile().exists()) {
-                f.getParentFile().mkdirs();
+            if (!newfile.getParentFile().exists()) {
+                newfile.getParentFile().mkdirs();
             }
 
             //传递文件
@@ -185,7 +193,6 @@ public class UserController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
         return new Result("新增用户信息成功", "200");
     }
@@ -210,7 +217,9 @@ public class UserController {
             String path = request.getServletContext().getRealPath("/uploadFiles/user");
             //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\user";
             File newfile = new File(path, user.getId() + ".jpg" );
-            File f = new File(path,user.getId() + ".jpg");
+            if (!newfile.getParentFile().exists()) {
+                newfile.mkdirs();
+            }
             try {
                 file.transferTo(newfile);
                 //修改成jpg格式
@@ -219,11 +228,11 @@ public class UserController {
             } catch (IOException e) {
 
             }
+            user.setUrl("http://127.0.0.1:8080/uploadFiles/user/" + user.getId() + ".jpg");
         }
-
         userService.updateUser(user);
 
-        return new Result("修改成功", "200");
+        return new Result("修改成功", "200", user);
     }
 
     /*

@@ -144,7 +144,7 @@
     </select>
 
     <insert id="addUser" parameterType="User" keyProperty="id" useGeneratedKeys="true">
-        insert into user (email, name, userName, qq, phone, password, departmentId, positionId, isHeadImage) values (#{email}, #{name}, #{userName}, #{qq}, #{phone}, #{password}, #{departmentId}, #{positionId}, #{isHeadImage})
+        insert into user (email, name, userName, qq, phone, password, departmentId, positionId, isHeadImage, url) values (#{email}, #{name}, #{userName}, #{qq}, #{phone}, #{password}, #{departmentId}, #{positionId}, #{isHeadImage}, #{url})
     </insert>
 
     <insert id="addUserRole" useGeneratedKeys="true" keyColumn="id" parameterType="int">
@@ -162,6 +162,9 @@
             </if>
             <if test="phone != null">
                 phone = #{phone},
+            </if>
+            <if test="url != null">
+                url = #{url},
             </if>
             <if test="qq != null">
                 qq = #{qq},

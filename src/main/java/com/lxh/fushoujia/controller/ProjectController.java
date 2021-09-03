@@ -364,7 +364,7 @@ public class ProjectController {
             //生成新的文件名
             long times = new Date().getTime();
             int random = Math.round((float)Math.random() * 10000);
-            System.out.println(random);
+            //System.out.println(random);
             String newFilename = times + "" + random + "." + suffix;
 
             Document document = new Document();

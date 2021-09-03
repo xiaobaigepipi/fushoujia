@@ -63,8 +63,8 @@ public class ContractController {
     @RequestMapping(value = "/contracts/delete", method = RequestMethod.PUT)
     @ResponseBody
     public Result deleteContract(@RequestBody Integer[] ids, HttpServletRequest request) {
-        String path = request.getServletContext().getRealPath("/src/static/img/contract");
-        String newpath= "D:\\web\\fushoujia\\src\\static\\img\\contract";
+        String path = request.getServletContext().getRealPath("/uploadFiles/document");
+        String newpath= "http://127.0.0.1:8080/uploadFiles/document/";
         for (int i = 0; i < ids.length; i++) {
             contractService.deleteContract(ids[i]);
             List<Document> list = projectService.listDocumentByContract(ids[i]);
@@ -73,7 +73,7 @@ public class ContractController {
                 String[] urls = StringUtils.split(url, '/');
                 String filename = urls[urls.length-1];
                 //System.out.println(filename);
-                File f = new File(newpath, filename);
+                File f = new File(path, filename);
                 if (f.exists()) {
                     f.delete();
                 }
@@ -103,8 +103,8 @@ public class ContractController {
         if (files.length == 0 || files == null) {
             return new Result("新增成功", "200", contract);
         }
-        String path = request.getServletContext().getRealPath("/src/static/img/contract");
-        String newpath= "D:\\web\\fushoujia\\src\\static\\img\\contract";
+        String path = request.getServletContext().getRealPath("/uploadFiles/document");
+        String newpath= "http://127.0.0.1:8080/uploadFiles/document/";
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
             String filename = file.getOriginalFilename();
@@ -114,7 +114,7 @@ public class ContractController {
             long time = new Date().getTime();
             long random = Math.round(Math.random() * 10000);
             String newFileName = time + random +"." + suffix;
-            String url = "/src/static/img/contract/" + newFileName;
+            String url = newpath + newFileName;
             Document document = new Document();
             document.setUrl(url);
             document.setName(filename);
@@ -123,7 +123,7 @@ public class ContractController {
             projectService.addDocument(document);
 
             //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\contract";
-            File f = new File(newpath, newFileName);
+            File f = new File(path, newFileName);
             if (!f.getParentFile().exists()) {
                 f.mkdirs();
             }
@@ -159,14 +159,15 @@ public class ContractController {
 
     @RequestMapping(value = "/contracts/file/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Result deleteFile(@PathVariable Integer id) {
-        String newpath= "D:\\web\\fushoujia\\src\\static\\img\\contract";
+    public Result deleteFile(@PathVariable Integer id, HttpServletRequest request) {
+        String path = request.getServletContext().getRealPath("/uploadFiles/document");
+        String newpath= "http://127.0.0.1:8080/uploadFiles/document/";
         Document d = projectService.getDocument(id);
         String url = d.getUrl();
         String[] urls = StringUtils.split(url, '/');
         String filename = urls[urls.length-1];
         //System.out.println(filename);
-        File f = new File(newpath, filename);
+        File f = new File(path, filename);
         projectService.deleteDocument(id);
         if (f.exists()) {
             f.delete();
@@ -183,8 +184,8 @@ public class ContractController {
         if (files.length == 0 || files == null) {
             return new Result("新增成功", "200", contract);
         }
-        String path = request.getServletContext().getRealPath("/src/static/img/contract");
-        String newpath= "D:\\web\\fushoujia\\src\\static\\img\\contract";
+        String path = request.getServletContext().getRealPath("/uploadFiles/document");
+        String newpath = "http://127.0.0.1:8080/uploadFiles/document/";
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
             String filename = file.getOriginalFilename();
@@ -194,7 +195,7 @@ public class ContractController {
             long time = new Date().getTime();
             long random = Math.round(Math.random() * 10000);
             String newFileName = time + random +"." + suffix;
-            String url = "/src/static/img/contract/" + newFileName;
+            String url = newpath + newFileName;
             Document document = new Document();
             document.setUrl(url);
             document.setName(filename);
@@ -203,7 +204,7 @@ public class ContractController {
             projectService.addDocument(document);
 
             //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\contract";
-            File f = new File(newpath, newFileName);
+            File f = new File(path, newFileName);
             if (!f.getParentFile().exists()) {
                 f.mkdirs();
             }
