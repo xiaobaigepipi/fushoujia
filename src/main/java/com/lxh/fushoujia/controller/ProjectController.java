@@ -354,7 +354,7 @@ public class ProjectController {
             return new Result("上传成功", "200");
         }
         //获取保存文件的路径
-        String path = request.getServletContext().getRealPath("/src/static/img/project");
+        String path = request.getServletContext().getRealPath("/uploadFiles/project");
         for (int i = 0; i < files.length; i++) {
             //获取原文件名
             String filename = files[i].getOriginalFilename();
@@ -370,13 +370,13 @@ public class ProjectController {
             Document document = new Document();
             document.setType(suffix);
             document.setName(filename);
-            document.setUrl("/src/static/img/project/" + newFilename);
+            document.setUrl("http://127.0.0.1:8080/uploadFiles/project/"  + newFilename);
             document.setProjectId(projectId);
             projectService.addDocument(document);
+            System.out.println(path);
+            //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\project";
 
-            String newpath= "D:\\web\\fushoujia\\src\\static\\img\\project";
-
-            File file = new File(newpath, newFilename);
+            File file = new File(path, newFilename);
             if (!file.getParentFile().exists()) {
                 file.mkdirs();
             }

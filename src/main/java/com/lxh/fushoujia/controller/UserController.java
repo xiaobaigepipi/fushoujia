@@ -156,7 +156,7 @@ public class UserController {
         //判断文件是否为空
         if(file != null) {
             //获取项目存放用户头像路径
-            String path = request.getServletContext().getRealPath("/src/static/img/user");
+            String path = request.getServletContext().getRealPath("/uploadFiles/user");
             //System.out.println(path);
 
             //获取原文件名
@@ -166,8 +166,8 @@ public class UserController {
             //
             File f = new File(path, userId+ ".jpg");
             //前端显示的文件，在开发环境中有
-            String newpath= "D:\\web\\fushoujia\\src\\static\\img\\user";
-            File newfile = new File(newpath, userId + ".jpg" );
+            //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\user";
+            File newfile = new File(path, userId + ".jpg" );
             System.out.println(f.getAbsolutePath());
             //判断文件夹是否存在
             if (!f.getParentFile().exists()) {
@@ -207,9 +207,9 @@ public class UserController {
             }
 
             //获取项目路径
-            String path = request.getServletContext().getRealPath("/src/static/img/user");
-            String newpath= "D:\\web\\fushoujia\\src\\static\\img\\user";
-            File newfile = new File(newpath, user.getId() + ".jpg" );
+            String path = request.getServletContext().getRealPath("/uploadFiles/user");
+            //String newpath= "D:\\web\\fushoujia\\src\\static\\img\\user";
+            File newfile = new File(path, user.getId() + ".jpg" );
             File f = new File(path,user.getId() + ".jpg");
             try {
                 file.transferTo(newfile);

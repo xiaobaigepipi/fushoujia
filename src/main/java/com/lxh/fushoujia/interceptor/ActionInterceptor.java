@@ -53,7 +53,7 @@ public class ActionInterceptor  extends HandlerInterceptorAdapter {
         String[] paths = StringUtils.split(path, '/');
         String actionPath = null;
         if (paths.length > 1){
-            actionPath = "/" + paths[1];
+            actionPath = "/" + paths[0];
             //System.out.println(actionPath);
         }
         if (actionPath == null) {
